@@ -7,6 +7,7 @@ import {
   Scripts,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { authQueryOptions } from '@/auth/auth.queries'
 import { Toaster } from '@/components/ui/sonner'
 import Header from '../components/Header'
 import appCss from '../styles.css?url'
@@ -61,11 +62,12 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   // 暂时不在这里获取 session，让组件自己使用 useSession
   // 未来可以优化为使用 server.ts 中间件
   beforeLoad: async ({ context }) => {
-    return {
-      session: context.session,
-    }
+      // 使用 ensureQueryData 而不是 prefetchQuery，这样可以返回实际的数据
+      const session = await context.queryClient.ensureQueryData(authQueryOptions())
+      return {
+        session
+      }
   },
-
   shellComponent: RootDocument,
 })
 

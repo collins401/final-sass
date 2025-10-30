@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouteContext } from '@tanstack/react-router'
 import {
   ChevronDown,
   ChevronRight,
@@ -23,10 +23,7 @@ export default function Header() {
   const [groupedExpanded, setGroupedExpanded] = useState<
     Record<string, boolean>
   >({})
-
-  // 使用 Better Auth 的 useSession hook
-  const { data: session } = authClient.useSession()
-
+  const { session } = useRouteContext({ from: '__root__' })
   const handleSignOut = async () => {
     try {
       await authClient.signOut()
@@ -68,7 +65,7 @@ export default function Header() {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 rounded-lg">
                 <User size={18} />
-                <span className="text-sm font-medium">{session.user.name}</span>
+                <span className="text-sm font-medium">{session.user?.name}</span>
               </div>
               <Button
                 variant="ghost"

@@ -1,12 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
-
+import { createFileRoute, useRouteContext } from '@tanstack/react-router'
 import {
-  Zap,
-  Server,
   Route as RouteIcon,
+  Server,
   Shield,
-  Waves,
   Sparkles,
+  Waves,
+  Zap,
 } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
@@ -14,6 +13,11 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
+  // 方法1: 从根路由的 context 获取 user (这是从 beforeLoad 传递下来的)
+  const { session } = useRouteContext({ from: '__root__' })
+  
+
+ 
   const features = [
     {
       icon: <Zap className="w-12 h-12 text-cyan-400" />,
@@ -79,6 +83,19 @@ function App() {
             Build modern applications with server functions, streaming, and type
             safety.
           </p>
+          
+          {/* 显示用户信息示例 */}
+          {session?.user && (
+            <div className="mb-6 p-4 bg-slate-800/50 border border-cyan-500/30 rounded-lg max-w-md mx-auto">
+              <p className="text-cyan-400 font-semibold mb-2">
+                欢迎回来，{session?.user.name}！
+              </p>
+              <p className="text-gray-300 text-sm">
+                {session.user.email}
+              </p>
+            </div>
+          )}
+          
           <div className="flex flex-col items-center gap-4">
             <a
               href="https://tanstack.com/start"

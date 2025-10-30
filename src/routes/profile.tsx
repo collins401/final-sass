@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, useRouteContext } from '@tanstack/react-router'
 import { Calendar, Mail, Shield, User } from 'lucide-react'
 import { toast } from 'sonner'
 import { authClient } from '@/auth/auth.client'
@@ -11,8 +11,7 @@ export const Route = createFileRoute('/profile')({
 
 function RouteComponent() {
   // 使用 Better Auth 的 useSession hook
-  const { data: session, isPending } = authClient.useSession()
-
+  const { session } = useRouteContext({ from: '__root__' })
   const handleSignOut = async () => {
     try {
       await authClient.signOut()
@@ -25,16 +24,16 @@ function RouteComponent() {
     }
   }
 
-  if (isPending) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background to-muted">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">加载中...</p>
-        </div>
-      </div>
-    )
-  }
+  // if (isPending) {
+  //   return (
+  //     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background to-muted">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+  //         <p className="mt-4 text-muted-foreground">加载中...</p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   if (!session?.user) {
     return <Navigate to="/sign-in" />
