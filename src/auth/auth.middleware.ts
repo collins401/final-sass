@@ -90,11 +90,11 @@ export const roleMiddleware = (requiredRole: string) => {
 
     // 检查用户角色
     if (session.user.role !== requiredRole) {
-        console.log(`User ${session.user.id} attempted to access ${getRequest().url} without the required role: ${requiredRole}`);
-      throw redirect({
-        to: '/',
-        statusCode: 403,
-      });
+        throw new Error('访问被拒绝：权限不足');
+      // throw redirect({
+      //   to: '/',
+      //   statusCode: 403,
+      // });
     }
 
     return next({ 
