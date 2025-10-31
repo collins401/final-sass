@@ -12,7 +12,7 @@ export const Route = createFileRoute('/(sign)/sign-in')({
   component: RouteComponent,
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      redirect: (search.redirect as string) || '/',
+      redirect: (search.redirect as string) || '/dashboard',
     }
   },
 })
