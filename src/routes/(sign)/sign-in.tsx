@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, useSearch } from '@tanstack/react-router'
 import { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -10,6 +10,11 @@ import { Label } from '@/components/ui/label'
 
 export const Route = createFileRoute('/(sign)/sign-in')({
   component: RouteComponent,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      redirect: (search.redirect as string) || '/',
+    }
+  },
 })
 
 interface SignInFormData {
@@ -19,6 +24,7 @@ interface SignInFormData {
 
 function RouteComponent() {
   const [isLoading, setIsLoading] = useState(false)
+  const search = useSearch({ from: '/(sign)/sign-in' })
   
   const emailId = useId()
   const passwordId = useId()
@@ -43,8 +49,8 @@ function RouteComponent() {
       }
 
       toast.success('登录成功！正在跳转...')
-      // 使用完整页面导航来刷新 session
-      window.location.href = '/'
+      // 跳转到之前的页面，或者首页
+      window.location.href = search.redirect
     } catch (error) {
       console.error('登录错误:', error)
       toast.error('登录失败，请重试')

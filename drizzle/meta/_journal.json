@@ -15,6 +15,13 @@
       "when": 1760690979461,
       "tag": "0001_exotic_runaways",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1761891254603,
+      "tag": "0002_odd_rocket_raccoon",
+      "breakpoints": true
     }
   ]
 }

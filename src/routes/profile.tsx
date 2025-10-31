@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate, useRouteContext } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Calendar, Mail, Shield, User } from 'lucide-react'
 import { toast } from 'sonner'
 import { authClient } from '@/auth/auth.client'
@@ -6,12 +6,27 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export const Route = createFileRoute('/profile')({
+  beforeLoad: async ({ context, location }) => {
+    // 检查用户是否已登录
+    if (!context.session?.user) {
+      throw redirect({
+        to: '/sign-in',
+        search: { redirect: location.pathname },
+      })
+    }
+    
+    return {
+      user: context.session.user,
+      sessionData: context.session.session,
+    }
+  },
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  // 使用 Better Auth 的 useSession hook
-  const { session } = useRouteContext({ from: '__root__' })
+  // 从 beforeLoad 返回的数据中获取用户信息
+  const { user, sessionData } = Route.useRouteContext()
+  
   const handleSignOut = async () => {
     try {
       await authClient.signOut()
@@ -22,21 +37,6 @@ function RouteComponent() {
       console.error('退出登录失败:', error)
       toast.error('退出登录失败')
     }
-  }
-
-  // if (isPending) {
-  //   return (
-  //     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background to-muted">
-  //       <div className="text-center">
-  //         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-  //         <p className="mt-4 text-muted-foreground">加载中...</p>
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
-  if (!session?.user) {
-    return <Navigate to="/sign-in" />
   }
 
   const formatDate = (date: Date | string | null | undefined) => {
@@ -72,7 +72,7 @@ function RouteComponent() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground">姓名</p>
-                  <p className="text-lg font-medium">{session.user.name}</p>
+                  <p className="text-lg font-medium">{user.name}</p>
                 </div>
               </div>
 
@@ -82,8 +82,8 @@ function RouteComponent() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground">邮箱</p>
-                  <p className="text-lg font-medium">{session.user.email}</p>
-                  {session.user.emailVerified && (
+                  <p className="text-lg font-medium">{user.email}</p>
+                  {user.emailVerified && (
                     <p className="text-xs text-green-600 dark:text-green-400 mt-1">
                       ✓ 已验证
                     </p>
@@ -98,19 +98,19 @@ function RouteComponent() {
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground">注册时间</p>
                   <p className="text-lg font-medium">
-                    {formatDate(session.user.createdAt)}
+                    {formatDate(user.createdAt)}
                   </p>
                 </div>
               </div>
 
-              {session.user.role && (
+              {user.role && (
                 <div className="flex items-start gap-3">
                   <div className="mt-1 p-2 rounded-lg bg-primary/10">
                     <Shield className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-muted-foreground">角色</p>
-                    <p className="text-lg font-medium">{session.user.role}</p>
+                    <p className="text-lg font-medium">{user.role}</p>
                   </div>
                 </div>
               )}
@@ -139,13 +139,13 @@ function RouteComponent() {
             <div>
               <p className="text-sm text-muted-foreground">会话 ID</p>
               <p className="text-sm font-mono bg-muted p-2 rounded mt-1 break-all">
-                {session.session.id}
+                {sessionData.id}
               </p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">过期时间</p>
               <p className="text-sm mt-1">
-                {formatDate(session.session.expiresAt)}
+                {formatDate(sessionData.expiresAt)}
               </p>
             </div>
           </CardContent>

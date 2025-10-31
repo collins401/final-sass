@@ -10,9 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as SplatRouteImport } from './routes/$'
+import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as signRouteRouteImport } from './routes/(sign)/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as DashboardTodoRouteImport } from './routes/dashboard/todo'
 import { Route as signSignUpRouteImport } from './routes/(sign)/sign-up'
 import { Route as signSignInRouteImport } from './routes/(sign)/sign-in'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
@@ -30,6 +35,21 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRouteRoute = DashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const signRouteRoute = signRouteRouteImport.update({
   id: '/(sign)',
   getParentRoute: () => rootRouteImport,
@@ -39,10 +59,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardTodoRoute = DashboardTodoRouteImport.update({
+  id: '/todo',
+  path: '/todo',
+  getParentRoute: () => DashboardRouteRoute,
 } as any)
 const signSignUpRoute = signSignUpRouteImport.update({
   id: '/sign-up',
@@ -102,10 +132,15 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof signRouteRouteWithChildren
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/profile': typeof ProfileRoute
   '/sign-in': typeof signSignInRoute
   '/sign-up': typeof signSignUpRoute
+  '/dashboard/todo': typeof DashboardTodoRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/admin/': typeof AdminIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -118,10 +153,14 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof signRouteRouteWithChildren
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/profile': typeof ProfileRoute
   '/sign-in': typeof signSignInRoute
   '/sign-up': typeof signSignUpRoute
+  '/dashboard/todo': typeof DashboardTodoRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/admin': typeof AdminIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -136,10 +175,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(sign)': typeof signRouteRouteWithChildren
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/profile': typeof ProfileRoute
   '/(sign)/sign-in': typeof signSignInRoute
   '/(sign)/sign-up': typeof signSignUpRoute
+  '/dashboard/todo': typeof DashboardTodoRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/admin/': typeof AdminIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
@@ -154,10 +198,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/dashboard'
+    | '/$'
     | '/profile'
     | '/sign-in'
     | '/sign-up'
+    | '/dashboard/todo'
     | '/demo/tanstack-query'
+    | '/admin/'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -170,10 +219,14 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dashboard'
+    | '/$'
     | '/profile'
     | '/sign-in'
     | '/sign-up'
+    | '/dashboard/todo'
     | '/demo/tanstack-query'
+    | '/admin'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -187,10 +240,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/(sign)'
+    | '/admin'
+    | '/dashboard'
+    | '/$'
     | '/profile'
     | '/(sign)/sign-in'
     | '/(sign)/sign-up'
+    | '/dashboard/todo'
     | '/demo/tanstack-query'
+    | '/admin/'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
@@ -205,6 +263,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   signRouteRoute: typeof signRouteRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
+  SplatRoute: typeof SplatRoute
   ProfileRoute: typeof ProfileRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -227,6 +288,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(sign)': {
       id: '/(sign)'
       path: '/'
@@ -241,12 +323,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
       fullPath: '/demo/tanstack-query'
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/todo': {
+      id: '/dashboard/todo'
+      path: '/todo'
+      fullPath: '/dashboard/todo'
+      preLoaderRoute: typeof DashboardTodoRouteImport
+      parentRoute: typeof DashboardRouteRoute
     }
     '/(sign)/sign-up': {
       id: '/(sign)/sign-up'
@@ -342,9 +438,36 @@ const signRouteRouteWithChildren = signRouteRoute._addFileChildren(
   signRouteRouteChildren,
 )
 
+interface AdminRouteRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
+interface DashboardRouteRouteChildren {
+  DashboardTodoRoute: typeof DashboardTodoRoute
+}
+
+const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
+  DashboardTodoRoute: DashboardTodoRoute,
+}
+
+const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
+  DashboardRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   signRouteRoute: signRouteRouteWithChildren,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
+  DashboardRouteRoute: DashboardRouteRouteWithChildren,
+  SplatRoute: SplatRoute,
   ProfileRoute: ProfileRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

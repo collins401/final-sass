@@ -1,4 +1,4 @@
-import { createFileRoute, useRouteContext } from '@tanstack/react-router'
+import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router'
 import {
   Route as RouteIcon,
   Server,
@@ -114,7 +114,7 @@ function App() {
           </div>
         </div>
       </section>
-
+          <Link to="/admin">to admin</Link>
       <section className="py-16 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
@@ -133,6 +133,7 @@ function App() {
           ))}
         </div>
       </section>
+      
     </div>
   )
 }
