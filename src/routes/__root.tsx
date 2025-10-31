@@ -9,7 +9,6 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { authQueryOptions } from '@/auth/auth.queries'
 import { Toaster } from '@/components/ui/sonner'
-import Header from '../components/Header'
 import appCss from '../styles.css?url'
 
 // Better Auth session 类型
@@ -78,7 +77,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Header />
+        
         {children}
         <Toaster position="bottom-right" richColors />
         <TanStackDevtools
