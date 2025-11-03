@@ -7,6 +7,7 @@ import {
 	LogOut,
 	Menu,
 	Network,
+	Ship,
 	SquareFunction,
 	StickyNote,
 	User,
@@ -38,7 +39,7 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="flex items-center justify-between bg-gray-800 p-4 text-white shadow-lg">
+			<header className="flex items-center justify-between bg-white p-4 text-gray-800 shadow-lg">
 				<div className="flex items-center">
 					<button
 						aria-label="Open menu"
@@ -49,12 +50,9 @@ export default function Header() {
 						<Menu size={24} />
 					</button>
 					<h1 className="ml-4 font-semibold text-xl">
-						<Link to="/">
-							<img
-								alt="TanStack Logo"
-								className="h-10"
-								src="/tanstack-word-logo-white.svg"
-							/>
+						<Link to="/" className="flex text-cyan-400">
+							<Ship />
+							Vulpes Sass
 						</Link>
 					</h1>
 				</div>
@@ -64,7 +62,7 @@ export default function Header() {
 					{session?.user ? (
 						<div className="flex items-center gap-3">
 							<Link to="/dashboard">
-								<div className="flex items-center gap-2 rounded-lg bg-gray-700 px-3 py-1.5">
+								<div className="flex items-center gap-2 rounded-lg  px-3 py-1.5">
 									<User size={18} />
 									<span className="font-medium text-sm">
 										{session.user?.name}
