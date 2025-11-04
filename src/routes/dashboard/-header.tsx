@@ -4,7 +4,6 @@ import {
 	ChevronDown,
 	LogOut,
 	MessageSquare,
-	Search,
 	Sparkles,
 	User,
 } from "lucide-react";
@@ -17,7 +16,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth.client";
 
 export const Header = () => {
@@ -35,10 +33,10 @@ export const Header = () => {
 
 	// 导航菜单项
 	const navItems = [
-		{ label: "Home", path: "/" },
-		{ label: "My Learning", path: "/my-learning" },
-		{ label: "Catalog", path: "/catalog" },
-		{ label: "Favorites", path: "/favorites", badge: "1" },
+		{ label: "个人信息", path: "/" },
+		{ label: "个人设置", path: "/my-learning" },
+		{ label: "我的收藏", path: "/catalog" },
+		{ label: "我的反馈", path: "/favorites", badge: "1" },
 	];
 
 	return (
@@ -50,7 +48,7 @@ export const Header = () => {
 					<Link className="flex items-center gap-2" to="/">
 						<div className="flex items-center gap-1">
 							<div className="flex h-8 w-8 items-center justify-center rounded bg-primary">
-								<span className="font-bold text-white text-xl">T</span>
+								<span className="font-bold text-white text-xl">V</span>
 							</div>
 							<span className="font-bold text-primary text-xl">trenning</span>
 						</div>
@@ -65,16 +63,6 @@ export const Header = () => {
 						<Sparkles className="h-4 w-4" />
 						Ask AI
 					</Button>
-
-					{/* 搜索框 */}
-					<div className="relative max-w-md flex-1">
-						<Search className="-translate-y-1/2 absolute top-1/2 left-3 h-4 w-4 text-muted-foreground" />
-						<Input
-							className="w-full bg-muted/50 pr-4 pl-10"
-							placeholder="Search..."
-							type="search"
-						/>
-					</div>
 				</div>
 
 				{/* 中间：导航菜单 */}

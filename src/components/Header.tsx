@@ -39,62 +39,66 @@ export default function Header() {
 
 	return (
 		<>
-			<header className="flex items-center justify-between bg-white p-4 text-gray-800 shadow-lg">
-				<div className="flex items-center">
-					<button
-						aria-label="Open menu"
-						className="rounded-lg p-2 transition-colors hover:bg-gray-700"
-						onClick={() => setIsOpen(true)}
-						type="button"
-					>
-						<Menu size={24} />
-					</button>
-					<h1 className="ml-4 font-semibold text-xl">
-						<Link to="/" className="flex text-cyan-400">
-							<Ship />
-							Vulpes Sass
-						</Link>
-					</h1>
-				</div>
+			<header className="sticky top-0 bg-white p-4 text-gray-800 shadow-lg">
+				<div className="container mx-auto flex items-center justify-between">
+					<div className="flex items-center">
+						<button
+							aria-label="Open menu"
+							className="rounded-lg p-2 transition-colors hover:bg-gray-700"
+							onClick={() => setIsOpen(true)}
+							type="button"
+						>
+							<Menu size={24} />
+						</button>
+						<h1 className="ml-4 font-semibold text-xl">
+							<Link className="flex items-center gap-2 text-cyan-400" to="/">
+								<span className="inline-block rounded-md bg-cyan-400 p-2 text-white">
+									<Ship />
+								</span>
+								<span>Vulpes Sass</span>
+							</Link>
+						</h1>
+					</div>
 
-				{/* 用户认证区域 */}
-				<div className="flex items-center gap-2">
-					{session?.user ? (
-						<div className="flex items-center gap-3">
-							<Link to="/dashboard">
-								<div className="flex items-center gap-2 rounded-lg  px-3 py-1.5">
-									<User size={18} />
-									<span className="font-medium text-sm">
-										{session.user?.name}
-									</span>
-								</div>
-							</Link>
-							<Button
-								className="gap-2"
-								onClick={handleSignOut}
-								size="sm"
-								variant="ghost"
-							>
-								<LogOut size={18} />
-								退出
-							</Button>
-						</div>
-					) : (
-						<div className="flex items-center gap-2">
-							<Link to="/sign-in">
-								<Button className="gap-2" size="sm" variant="ghost">
-									<LogIn size={18} />
-									登录
+					{/* 用户认证区域 */}
+					<div className="flex items-center gap-2">
+						{session?.user ? (
+							<div className="flex items-center gap-3">
+								<Link to="/dashboard">
+									<div className="flex items-center gap-2 rounded-lg px-3 py-1.5">
+										<User size={18} />
+										<span className="font-medium text-sm">
+											{session.user?.name}
+										</span>
+									</div>
+								</Link>
+								<Button
+									className="gap-2"
+									onClick={handleSignOut}
+									size="sm"
+									variant="ghost"
+								>
+									<LogOut size={18} />
+									退出
 								</Button>
-							</Link>
-							<Link to="/sign-up">
-								<Button className="gap-2" size="sm" variant="default">
-									<UserPlus size={18} />
-									注册
-								</Button>
-							</Link>
-						</div>
-					)}
+							</div>
+						) : (
+							<div className="flex items-center gap-2">
+								<Link to="/sign-in">
+									<Button className="gap-2" size="sm" variant="ghost">
+										<LogIn size={18} />
+										登录
+									</Button>
+								</Link>
+								<Link to="/sign-up">
+									<Button className="gap-2" size="sm" variant="default">
+										<UserPlus size={18} />
+										注册
+									</Button>
+								</Link>
+							</div>
+						)}
+					</div>
 				</div>
 			</header>
 

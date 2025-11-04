@@ -79,7 +79,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="bg-theme">
+			<body>
 				{NOT_SITE_PAGE_GROUP.some((s) =>
 					currentRouteId.startsWith(s)
 				) ? null : (

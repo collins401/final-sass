@@ -21,11 +21,18 @@ import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-qu
 import { Route as DashboardTodoRouteImport } from './routes/dashboard/todo'
 import { Route as signSignUpRouteImport } from './routes/(sign)/sign-up'
 import { Route as signSignInRouteImport } from './routes/(sign)/sign-in'
+import { Route as AdminSettingIndexRouteImport } from './routes/admin/setting/index'
+import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
+import { Route as AdminPageIndexRouteImport } from './routes/admin/page/index'
+import { Route as AdminMenuIndexRouteImport } from './routes/admin/menu/index'
+import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
+import { Route as AdminCategoryIndexRouteImport } from './routes/admin/category/index'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoApiTqTodosRouteImport } from './routes/demo/api.tq-todos'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
+import { Route as AdminPostsCategoryRouteImport } from './routes/admin/posts/category'
 import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
 import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
@@ -90,6 +97,36 @@ const signSignInRoute = signSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => signRouteRoute,
 } as any)
+const AdminSettingIndexRoute = AdminSettingIndexRouteImport.update({
+  id: '/setting/',
+  path: '/setting/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPageIndexRoute = AdminPageIndexRouteImport.update({
+  id: '/page/',
+  path: '/page/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMenuIndexRoute = AdminMenuIndexRouteImport.update({
+  id: '/menu/',
+  path: '/menu/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMediaIndexRoute = AdminMediaIndexRouteImport.update({
+  id: '/media/',
+  path: '/media/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminCategoryIndexRoute = AdminCategoryIndexRouteImport.update({
+  id: '/category/',
+  path: '/category/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
   path: '/demo/start/server-funcs',
@@ -114,6 +151,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPostsCategoryRoute = AdminPostsCategoryRouteImport.update({
+  id: '/posts/category',
+  path: '/posts/category',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
   id: '/demo/start/ssr/',
@@ -148,11 +190,18 @@ export interface FileRoutesByFullPath {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/admin/category': typeof AdminCategoryIndexRoute
+  '/admin/media': typeof AdminMediaIndexRoute
+  '/admin/menu': typeof AdminMenuIndexRoute
+  '/admin/page': typeof AdminPageIndexRoute
+  '/admin/posts': typeof AdminPostsIndexRoute
+  '/admin/setting': typeof AdminSettingIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -168,11 +217,18 @@ export interface FileRoutesByTo {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/admin/category': typeof AdminCategoryIndexRoute
+  '/admin/media': typeof AdminMediaIndexRoute
+  '/admin/menu': typeof AdminMenuIndexRoute
+  '/admin/page': typeof AdminPageIndexRoute
+  '/admin/posts': typeof AdminPostsIndexRoute
+  '/admin/setting': typeof AdminSettingIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -192,11 +248,18 @@ export interface FileRoutesById {
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/admin/category/': typeof AdminCategoryIndexRoute
+  '/admin/media/': typeof AdminMediaIndexRoute
+  '/admin/menu/': typeof AdminMenuIndexRoute
+  '/admin/page/': typeof AdminPageIndexRoute
+  '/admin/posts/': typeof AdminPostsIndexRoute
+  '/admin/setting/': typeof AdminSettingIndexRoute
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
@@ -216,11 +279,18 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/admin/'
     | '/dashboard/'
+    | '/admin/posts/category'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/admin/category'
+    | '/admin/media'
+    | '/admin/menu'
+    | '/admin/page'
+    | '/admin/posts'
+    | '/admin/setting'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -236,11 +306,18 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/admin'
     | '/dashboard'
+    | '/admin/posts/category'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/admin/category'
+    | '/admin/media'
+    | '/admin/menu'
+    | '/admin/page'
+    | '/admin/posts'
+    | '/admin/setting'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -259,11 +336,18 @@ export interface FileRouteTypes {
     | '/demo/tanstack-query'
     | '/admin/'
     | '/dashboard/'
+    | '/admin/posts/category'
     | '/api/auth/$'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/admin/category/'
+    | '/admin/media/'
+    | '/admin/menu/'
+    | '/admin/page/'
+    | '/admin/posts/'
+    | '/admin/setting/'
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
@@ -375,6 +459,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof signSignInRouteImport
       parentRoute: typeof signRouteRoute
     }
+    '/admin/setting/': {
+      id: '/admin/setting/'
+      path: '/setting'
+      fullPath: '/admin/setting'
+      preLoaderRoute: typeof AdminSettingIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/posts/': {
+      id: '/admin/posts/'
+      path: '/posts'
+      fullPath: '/admin/posts'
+      preLoaderRoute: typeof AdminPostsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/page/': {
+      id: '/admin/page/'
+      path: '/page'
+      fullPath: '/admin/page'
+      preLoaderRoute: typeof AdminPageIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/menu/': {
+      id: '/admin/menu/'
+      path: '/menu'
+      fullPath: '/admin/menu'
+      preLoaderRoute: typeof AdminMenuIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/media/': {
+      id: '/admin/media/'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/category/': {
+      id: '/admin/category/'
+      path: '/category'
+      fullPath: '/admin/category'
+      preLoaderRoute: typeof AdminCategoryIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
       path: '/demo/start/server-funcs'
@@ -409,6 +535,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/posts/category': {
+      id: '/admin/posts/category'
+      path: '/posts/category'
+      fullPath: '/admin/posts/category'
+      preLoaderRoute: typeof AdminPostsCategoryRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/demo/start/ssr/': {
       id: '/demo/start/ssr/'
@@ -457,10 +590,24 @@ const signRouteRouteWithChildren = signRouteRoute._addFileChildren(
 
 interface AdminRouteRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminPostsCategoryRoute: typeof AdminPostsCategoryRoute
+  AdminCategoryIndexRoute: typeof AdminCategoryIndexRoute
+  AdminMediaIndexRoute: typeof AdminMediaIndexRoute
+  AdminMenuIndexRoute: typeof AdminMenuIndexRoute
+  AdminPageIndexRoute: typeof AdminPageIndexRoute
+  AdminPostsIndexRoute: typeof AdminPostsIndexRoute
+  AdminSettingIndexRoute: typeof AdminSettingIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
+  AdminPostsCategoryRoute: AdminPostsCategoryRoute,
+  AdminCategoryIndexRoute: AdminCategoryIndexRoute,
+  AdminMediaIndexRoute: AdminMediaIndexRoute,
+  AdminMenuIndexRoute: AdminMenuIndexRoute,
+  AdminPageIndexRoute: AdminPageIndexRoute,
+  AdminPostsIndexRoute: AdminPostsIndexRoute,
+  AdminSettingIndexRoute: AdminSettingIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
