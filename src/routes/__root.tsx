@@ -5,10 +5,8 @@ import {
 	createRootRouteWithContext,
 	HeadContent,
 	Scripts,
-	useMatches,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/sonner";
 import { authQueryOptions } from "@/lib/auth/auth.queries";
 import appCss from "../styles.css?url";
@@ -59,32 +57,25 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		],
 		links: [{ rel: "stylesheet", href: appCss }],
 	}),
-	beforeLoad: async ({ context }) => {
-		// 使用 ensureQueryData 而不是 prefetchQuery，这样可以返回实际的数据
-		const session = await context.queryClient.ensureQueryData(
-			authQueryOptions()
-		);
-		return {
-			session,
-		};
+	beforeLoad: ({ context }) => {
+		// // 使用 ensureQueryData 而不是 prefetchQuery，这样可以返回实际的数据
+		// const session = await context.queryClient.ensureQueryData(
+		// 	authQueryOptions()
+		// );
+		// return {
+		// 	session,
+		// };
+		context.queryClient.prefetchQuery(authQueryOptions());
 	},
 	shellComponent: RootDocument,
 });
-const NOT_SITE_PAGE_GROUP = ["/dashboard/", "/admin/", "/(sign)/"];
 function RootDocument({ children }: { children: React.ReactNode }) {
-	const matches = useMatches();
-	const currentRouteId = matches?.[matches.length - 1].routeId;
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
 				<HeadContent />
 			</head>
 			<body>
-				{NOT_SITE_PAGE_GROUP.some((s) =>
-					currentRouteId.startsWith(s)
-				) ? null : (
-					<Header />
-				)}
 				{children}
 				<Toaster position="bottom-right" richColors />
 				<TanStackDevtools

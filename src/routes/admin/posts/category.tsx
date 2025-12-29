@@ -18,7 +18,6 @@ import {
 import "@xyflow/react/dist/style.css";
 import {
 	Check,
-	Download,
 	Edit,
 	FolderPlus,
 	Link2,
@@ -139,22 +138,6 @@ function CategoryNode({ data, id }: { data: CategoryNodeData; id: string }) {
 				className="!h-3 !w-3 !border-2 !border-white !bg-white/30 hover:!bg-white"
 				id="bottom"
 				position={Position.Bottom}
-				type="source"
-			/>
-
-			{/* 连接点 - 左侧 */}
-			<Handle
-				className="!h-3 !w-3 !border-2 !border-white !bg-white/30 hover:!bg-white"
-				id="left"
-				position={Position.Left}
-				type="target"
-			/>
-
-			{/* 连接点 - 右侧 */}
-			<Handle
-				className="!h-3 !w-3 !border-2 !border-white !bg-white/30 hover:!bg-white"
-				id="right"
-				position={Position.Right}
 				type="source"
 			/>
 
@@ -292,55 +275,16 @@ const initialEdges: Edge[] = [
 		id: "e1-1-1",
 		source: "1",
 		target: "1-1",
-		animated: true,
-		type: "smoothstep",
-		style: { stroke: "#9333ea", strokeWidth: 2 },
-		label: "子分类",
-		labelStyle: {
-			fill: "#6b7280",
-			fontSize: 12,
-			fontWeight: 500,
-		},
-		labelBgStyle: {
-			fill: "#fff",
-			fillOpacity: 0.8,
-		},
 	},
 	{
 		id: "e1-1-2",
 		source: "1",
 		target: "1-2",
-		animated: true,
-		type: "smoothstep",
-		style: { stroke: "#9333ea", strokeWidth: 2 },
-		label: "子分类",
-		labelStyle: {
-			fill: "#6b7280",
-			fontSize: 12,
-			fontWeight: 500,
-		},
-		labelBgStyle: {
-			fill: "#fff",
-			fillOpacity: 0.8,
-		},
 	},
 	{
 		id: "e1-1-3",
 		source: "1",
 		target: "1-3",
-		animated: true,
-		type: "smoothstep",
-		style: { stroke: "#9333ea", strokeWidth: 2 },
-		label: "子分类",
-		labelStyle: {
-			fill: "#6b7280",
-			fontSize: 12,
-			fontWeight: 500,
-		},
-		labelBgStyle: {
-			fill: "#fff",
-			fillOpacity: 0.8,
-		},
 	},
 ];
 
@@ -370,39 +314,13 @@ function RouteComponent() {
 		[setEdges]
 	);
 
-	// 连接节点 - 增强父子连接功能
+	// 连接节点
 	const onConnect = useCallback(
 		(params: any) => {
-			// 自动设置连接样式
-			const sourceNode = nodes.find((n) => n.id === params.source);
-			const targetNode = nodes.find((n) => n.id === params.target);
-
-			// 根据连接类型设置不同样式
-			const newEdge = {
-				...params,
-				animated: true,
-				type: "smoothstep", // 使用平滑阶梯线
-				style: {
-					stroke: sourceNode?.data.level === 0 ? "#9333ea" : "#3b82f6",
-					strokeWidth: 2,
-				},
-				// 添加标签显示关系
-				label: targetNode?.data.level === 1 ? "子分类" : "关联",
-				labelStyle: {
-					fill: "#6b7280",
-					fontSize: 12,
-					fontWeight: 500,
-				},
-				labelBgStyle: {
-					fill: "#fff",
-					fillOpacity: 0.8,
-				},
-			};
-
-			setEdges((eds) => addEdge(newEdge, eds));
+			setEdges((eds) => addEdge(params, eds));
 			toast.success("已建立连接关系");
 		},
-		[setEdges, nodes]
+		[setEdges]
 	);
 
 	// 编辑分类
@@ -514,19 +432,6 @@ function RouteComponent() {
 					id: `e-${parentId}-${newId}`,
 					source: parentId,
 					target: newId,
-					animated: true,
-					type: "smoothstep",
-					style: { stroke: "#9333ea", strokeWidth: 2 },
-					label: "子分类",
-					labelStyle: {
-						fill: "#6b7280",
-						fontSize: 12,
-						fontWeight: 500,
-					},
-					labelBgStyle: {
-						fill: "#fff",
-						fillOpacity: 0.8,
-					},
 				};
 				return [...eds, newEdge];
 			});
@@ -611,34 +516,6 @@ function RouteComponent() {
 		setInitialized(true);
 	}
 
-	// 导出数据
-	const exportData = () => {
-		const data = {
-			nodes: nodes.map((n) => ({
-				id: n.id,
-				label: n.data.label,
-				color: n.data.color,
-				level: n.data.level,
-				position: n.position,
-			})),
-			edges: edges.map((e) => ({
-				id: e.id,
-				source: e.source,
-				target: e.target,
-			})),
-		};
-
-		const dataStr = JSON.stringify(data, null, 2);
-		const dataBlob = new Blob([dataStr], { type: "application/json" });
-		const url = URL.createObjectURL(dataBlob);
-		const link = document.createElement("a");
-		link.href = url;
-		link.download = "categories-flow.json";
-		link.click();
-		URL.revokeObjectURL(url);
-		toast.success("导出成功");
-	};
-
 	// 重置布局
 	const resetLayout = () => {
 		setNodes(updateNodeCallbacks(initialNodes));
@@ -676,10 +553,6 @@ function RouteComponent() {
 							<RotateCcw className="mr-2 h-4 w-4" />
 							重置布局
 						</Button>
-						<Button onClick={exportData} variant="outline">
-							<Download className="mr-2 h-4 w-4" />
-							导出数据
-						</Button>
 						<Button onClick={addRootCategory}>
 							<FolderPlus className="mr-2 h-4 w-4" />
 							添加根分类
@@ -698,6 +571,11 @@ function RouteComponent() {
 					onConnect={onConnect}
 					onEdgesChange={onEdgesChange}
 					onNodesChange={onNodesChange}
+					viewport={{
+						zoom: 0.7,
+						x: 0,
+						y: 0,
+					}}
 				>
 					<Background gap={20} variant={BackgroundVariant.Dots} />
 					<Controls />

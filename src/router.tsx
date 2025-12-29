@@ -8,19 +8,25 @@ import { routeTree } from "./routeTree.gen";
 
 // Create a new router instance
 export const getRouter = () => {
-	const queryClient = new QueryClient();
-	const router = createRouter({
-		routeTree,
-		context: {
-			queryClient,
-			session: null,
-		},
-		defaultPreload: "intent",
-		defaultErrorComponent: DefaultCatchBoundary,
-		defaultNotFoundComponent: () => <NotFound />,
-	});
+  const queryClient = new QueryClient();
+  const router = createRouter({
+    routeTree,
+    context: {
+      queryClient,
+      session: null,
+    },
+    defaultPreload: "intent",
+    defaultErrorComponent: DefaultCatchBoundary,
+    defaultNotFoundComponent: () => <NotFound />,
+  });
 
-	setupRouterSsrQueryIntegration({ router, queryClient });
+  setupRouterSsrQueryIntegration({ router, queryClient });
 
-	return router;
+  return router;
 };
+
+declare module "@tanstack/react-router" {
+  interface StaticDataRouteOption {
+    title?: string;
+  }
+}

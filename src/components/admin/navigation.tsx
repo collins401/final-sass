@@ -56,7 +56,7 @@ export const navigationGroups: NavGroupData[] = [
 					},
 					{
 						title: "文章列表",
-						url: "/admin/posts",
+						url: "/admin/posts/list",
 					},
 					{
 						title: "文章分类",

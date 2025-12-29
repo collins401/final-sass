@@ -17,7 +17,9 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "tab"
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
   },
   "assist": {
     "actions": {
@@ -41,7 +43,8 @@
         "useConsistentTypeDefinitions": "off",
         "useBlockStatements": "off",
         "noMagicNumbers": "off",
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "noNestedTernary": "off"
       },
       "suspicious": {
         "noConsole": "warn",

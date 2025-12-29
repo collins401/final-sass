@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Header } from "./-header";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_user")({
 	component: RouteComponent,
 	beforeLoad: ({ context, location }) => {
 		// 检查是否已登录

@@ -64,7 +64,7 @@ export default function Header() {
 					<div className="flex items-center gap-2">
 						{session?.user ? (
 							<div className="flex items-center gap-3">
-								<Link to="/dashboard">
+								<Link to="/user">
 									<div className="flex items-center gap-2 rounded-lg px-3 py-1.5">
 										<User size={18} />
 										<span className="font-medium text-sm">

@@ -117,7 +117,7 @@ function RouteComponent() {
 
 			toast.success("注册成功！正在跳转...");
 			// 使用完整页面导航来刷新 session
-			window.location.href = "/";
+			window.location.href = "/user";
 		} catch (error) {
 			console.error("注册错误:", error);
 			toast.error("注册失败，请重试");

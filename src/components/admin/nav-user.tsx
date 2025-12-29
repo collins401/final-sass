@@ -24,17 +24,8 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 
-export function NavUser({
-	user,
-}: {
-	user: {
-		name: string;
-		email: string;
-		image: string;
-	};
-}) {
+export function NavUser({ user }: { user: any }) {
 	const { isMobile } = useSidebar();
-	console.log("user--", user);
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>

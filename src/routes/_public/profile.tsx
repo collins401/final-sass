@@ -11,20 +11,20 @@ import {
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth/auth.client";
 
-export const Route = createFileRoute("/profile")({
+export const Route = createFileRoute("/_public/profile")({
 	beforeLoad: ({ context, location }) => {
 		// 检查用户是否已登录
 		if (!context.session?.user) {
 			throw redirect({
 				to: "/sign-in",
 				search: { redirect: location.pathname },
-			});
+			})
 		}
 
 		return {
 			user: context.session.user,
 			sessionData: context.session.session,
-		};
+		}
 	},
 	component: RouteComponent,
 });
@@ -43,7 +43,7 @@ function RouteComponent() {
 			console.error("退出登录失败:", error);
 			toast.error("退出登录失败");
 		}
-	};
+	}
 
 	const formatDate = (date: Date | string | null | undefined) => {
 		if (!date) return "未知";
@@ -52,8 +52,8 @@ function RouteComponent() {
 			year: "numeric",
 			month: "long",
 			day: "numeric",
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-background to-muted p-4 py-12">
@@ -158,5 +158,5 @@ function RouteComponent() {
 				</Card>
 			</div>
 		</div>
-	);
+	)
 }

@@ -11,3 +11,12 @@ export const getPunkSongs = createServerFn({
 	{ id: 6, name: "All the Small Things", artist: "blink-182" },
 	{ id: 7, name: "Beverly Hills", artist: "Weezer" },
 ]);
+export const getCategory = createServerFn({
+	method: "GET",
+}).handler(async () => [
+	{ id: 1, name: "Rock" },
+	{ id: 2, name: "Pop" },
+	{ id: 3, name: "Jazz" },
+	{ id: 4, name: "Classical" },
+	{ id: 5, name: "Hip Hop" },
+]);

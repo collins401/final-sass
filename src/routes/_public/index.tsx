@@ -8,7 +8,7 @@ import {
 	Zap,
 } from "lucide-react";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_public/")({
 	component: App,
 });
 
@@ -113,7 +113,7 @@ function App() {
 			<Link to="/admin">to admin</Link>
 			<div>
 				{" "}
-				<Link to="/dashboard/todo">to admin</Link>
+				<Link to="/todos">to admin</Link>
 			</div>
 			<section className="mx-auto max-w-7xl px-6 py-16">
 				<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-	const { session } = useRouteContext({ from: "__root__" });
+	const { user } = useRouteContext({ from: "/admin" });
 	return (
 		<Sidebar variant="inset" {...props}>
 			<SidebarHeader>
@@ -40,7 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<NavMain />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser user={session?.user} />
+				<NavUser user={user} />
 			</SidebarFooter>
 		</Sidebar>
 	);

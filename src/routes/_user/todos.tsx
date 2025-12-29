@@ -24,16 +24,16 @@ const addTodo = createServerFn({ method: "POST" })
 					userId: context.user.id,
 				})
 				.returning()
-	);
+	)
 
 const deleteTodo = createServerFn({ method: "POST" })
 	.middleware([adminMiddleware])
 	.inputValidator((id: number) => id)
 	.handler(async ({ data }) => {
 		await db.delete(todo).where(eq(todo.id, data));
-	});
+	})
 
-export const Route = createFileRoute("/dashboard/todo")({
+export const Route = createFileRoute("/_user/todos")({
 	component: Home,
 	loader: async () => await getTodos(),
 });
@@ -55,7 +55,7 @@ function Home() {
 			console.error("添加失败:", error);
 			toast.error(error.message || "添加失败，请重试");
 		},
-	});
+	})
 
 	const deleteMutation = useMutation({
 		mutationFn: deleteTodo,
@@ -77,18 +77,18 @@ function Home() {
 				toast.error(error.message || "删除失败，请重试");
 			}
 		},
-	});
+	})
 
 	const handleSubmit = () => {
 		if (text.trim()) {
 			addMutation.mutate({ data: text });
 		}
-	};
+	}
 
 	const handleDelete = (id: number) => {
 		setDeletingId(id);
 		deleteMutation.mutate({ data: id });
-	};
+	}
 	return (
 		<div className="flex min-h-screen items-center justify-center p-4">
 			<div className="w-full max-w-2xl rounded-xl border-8 border-black/10 bg-black/50 p-8 shadow-xl backdrop-blur-md">
@@ -133,5 +133,5 @@ function Home() {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }
