@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { and, desc, eq, like, sql } from "drizzle-orm";
 import { z } from "zod";
-import { db } from "@/lib/db";
-import { category, post, user } from "@/lib/db/schema";
+import { db } from "@/db";
+import { category, post, user } from "@/db/schema";
 
 const postSchema = z.object({
   title: z.string().min(1, "Title is required"),

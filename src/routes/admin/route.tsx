@@ -1,8 +1,11 @@
 import { createFileRoute, Outlet, redirect, useLocation } from "@tanstack/react-router";
-import { Sliders } from "lucide-react";
-import { useState } from "react";
+import { PanelLeftRightDashed, PanelTopBottomDashed } from "lucide-react";
+import { Suspense, useState } from "react";
 import { AppSidebar } from "@/components/admin/app-sidebar";
 import { navigationGroups } from "@/components/admin/navigation";
+import { Loading } from "@/components/loading";
+import { ModeToggle } from "@/components/mode-toggle";
+import { NavigationProgress } from "@/components/navigation-progress";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,7 +16,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { authQueryOptions } from "@/lib/auth/auth.queries";
+
 export const Route = createFileRoute("/admin")({
   beforeLoad: async ({ context, location }) => {
     const session = await context.queryClient.ensureQueryData({
@@ -69,48 +74,69 @@ function RouteComponent() {
 
   return (
     <SidebarProvider>
+      <NavigationProgress />
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-2 border-b">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator className="mr-2 data-[orientation=vertical]:h-4" orientation="vertical" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                {breadcrumbs.length > 0 ? (
-                  breadcrumbs.map((item, index) => (
-                    <div className="flex items-center gap-2" key={item.url}>
-                      <BreadcrumbItem className="hidden md:block">
-                        {index === breadcrumbs.length - 1 ? (
-                          <BreadcrumbPage>{item.title}</BreadcrumbPage>
-                        ) : (
-                          <BreadcrumbLink href={item.url}>{item.title}</BreadcrumbLink>
+          <div className="flex w-full items-center justify-between gap-2 px-4">
+            <div className="flex flex-1 items-center gap-2">
+              <SidebarTrigger className="-ml-1" />
+              <Separator className="mr-2 data-[orientation=vertical]:h-4" orientation="vertical" />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  {breadcrumbs.length > 0 ? (
+                    breadcrumbs.map((item, index) => (
+                      <div className="flex items-center gap-2" key={item.url}>
+                        <BreadcrumbItem className="hidden md:block">
+                          {index === breadcrumbs.length - 1 ? (
+                            <BreadcrumbPage>{item.title}</BreadcrumbPage>
+                          ) : (
+                            <BreadcrumbLink href={item.url}>{item.title}</BreadcrumbLink>
+                          )}
+                        </BreadcrumbItem>
+                        {index < breadcrumbs.length - 1 && (
+                          <BreadcrumbSeparator className="hidden md:block" />
                         )}
-                      </BreadcrumbItem>
-                      {index < breadcrumbs.length - 1 && (
-                        <BreadcrumbSeparator className="hidden md:block" />
-                      )}
-                    </div>
-                  ))
-                ) : (
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Dashboard</BreadcrumbPage>
-                  </BreadcrumbItem>
-                )}
-              </BreadcrumbList>
-            </Breadcrumb>
-            <div>
-              <Sliders
+                      </div>
+                    ))
+                  ) : (
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )}
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+            <div className="flex items-center gap-2">
+              <Tooltip>
+                <TooltipTrigger>
+                  {contentWidth === "w-full" ? (
+                    <PanelTopBottomDashed
+                      onClick={() => setContentWidth("max-w-[1000px]")}
+                      size={20}
+                    />
+                  ) : (
+                    <PanelLeftRightDashed onClick={() => setContentWidth("w-full")} size={20} />
+                  )}
+                </TooltipTrigger>
+                <TooltipContent>
+                  {contentWidth === "w-full" ? "内容居中" : "内容适宽"}
+                </TooltipContent>
+              </Tooltip>
+              {/* <Sliders
                 onClick={() =>
                   setContentWidth(contentWidth === "max-w-[1000px]" ? "w-full" : "max-w-[1000px]")
                 }
-              />
+              /> */}
+              <ModeToggle />
             </div>
           </div>
         </header>
-        <div>
+        <div className="m-4 md:m-6">
           <div className={`${contentWidth}`} style={{ margin: "0 auto" }}>
-            <Outlet />
+            <Suspense fallback={<Loading />}>
+              <Outlet />
+            </Suspense>
           </div>
         </div>
       </SidebarInset>

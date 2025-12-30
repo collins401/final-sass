@@ -16,7 +16,6 @@ import { Route as PublicRouteRouteImport } from './routes/_public/route'
 import { Route as signRouteRouteImport } from './routes/(sign)/route'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as AdminSplatRouteImport } from './routes/admin/$'
 import { Route as UserUserRouteImport } from './routes/_user/user'
 import { Route as UserTodosRouteImport } from './routes/_user/todos'
@@ -24,24 +23,19 @@ import { Route as PublicProfileRouteImport } from './routes/_public/profile'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as signSignUpRouteImport } from './routes/(sign)/sign-up'
 import { Route as signSignInRouteImport } from './routes/(sign)/sign-in'
-import { Route as AdminSettingIndexRouteImport } from './routes/admin/setting/index'
+import { Route as AdminSettingsIndexRouteImport } from './routes/admin/settings/index'
 import { Route as AdminPageIndexRouteImport } from './routes/admin/page/index'
 import { Route as AdminMenuIndexRouteImport } from './routes/admin/menu/index'
 import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
 import { Route as AdminCategoryIndexRouteImport } from './routes/admin/category/index'
-import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
-import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
-import { Route as DemoApiTqTodosRouteImport } from './routes/demo/api.tq-todos'
-import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
+import { Route as AdminProductsCategoryRouteImport } from './routes/admin/products/category'
 import { Route as AdminPostsListRouteImport } from './routes/admin/posts/list'
 import { Route as AdminPostsCreateRouteImport } from './routes/admin/posts/create'
 import { Route as AdminPostsCategoryRouteImport } from './routes/admin/posts/category'
 import { Route as AdminPostsPostIdRouteImport } from './routes/admin/posts/$postId'
-import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
-import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
-import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
-import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
+import { Route as AdminProductsListIndexRouteImport } from './routes/admin/products/list/index'
+import { Route as AdminProductsIdIndexRouteImport } from './routes/admin/products/$id/index'
 
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
@@ -74,11 +68,6 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PublicRouteRoute,
-} as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSplatRoute = AdminSplatRouteImport.update({
   id: '/$',
@@ -115,9 +104,9 @@ const signSignInRoute = signSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => signRouteRoute,
 } as any)
-const AdminSettingIndexRoute = AdminSettingIndexRouteImport.update({
-  id: '/setting/',
-  path: '/setting/',
+const AdminSettingsIndexRoute = AdminSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminPageIndexRoute = AdminPageIndexRouteImport.update({
@@ -140,30 +129,15 @@ const AdminCategoryIndexRoute = AdminCategoryIndexRouteImport.update({
   path: '/category/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
-  id: '/demo/start/server-funcs',
-  path: '/demo/start/server-funcs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartApiRequestRoute = DemoStartApiRequestRouteImport.update({
-  id: '/demo/start/api-request',
-  path: '/demo/start/api-request',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoApiTqTodosRoute = DemoApiTqTodosRouteImport.update({
-  id: '/demo/api/tq-todos',
-  path: '/demo/api/tq-todos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
-  id: '/demo/api/names',
-  path: '/demo/api/names',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProductsCategoryRoute = AdminProductsCategoryRouteImport.update({
+  id: '/products/category',
+  path: '/products/category',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminPostsListRoute = AdminPostsListRouteImport.update({
   id: '/posts/list',
@@ -185,25 +159,15 @@ const AdminPostsPostIdRoute = AdminPostsPostIdRouteImport.update({
   path: '/posts/$postId',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
-  id: '/demo/start/ssr/',
-  path: '/demo/start/ssr/',
-  getParentRoute: () => rootRouteImport,
+const AdminProductsListIndexRoute = AdminProductsListIndexRouteImport.update({
+  id: '/products/list/',
+  path: '/products/list/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const DemoStartSsrSpaModeRoute = DemoStartSsrSpaModeRouteImport.update({
-  id: '/demo/start/ssr/spa-mode',
-  path: '/demo/start/ssr/spa-mode',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrFullSsrRoute = DemoStartSsrFullSsrRouteImport.update({
-  id: '/demo/start/ssr/full-ssr',
-  path: '/demo/start/ssr/full-ssr',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
-  id: '/demo/start/ssr/data-only',
-  path: '/demo/start/ssr/data-only',
-  getParentRoute: () => rootRouteImport,
+const AdminProductsIdIndexRoute = AdminProductsIdIndexRouteImport.update({
+  id: '/products/$id/',
+  path: '/products/$id/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -216,27 +180,21 @@ export interface FileRoutesByFullPath {
   '/todos': typeof UserTodosRoute
   '/user': typeof UserUserRoute
   '/admin/$': typeof AdminSplatRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/posts/$postId': typeof AdminPostsPostIdRoute
   '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
+  '/admin/products/category': typeof AdminProductsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/admin/category': typeof AdminCategoryIndexRoute
   '/admin/media': typeof AdminMediaIndexRoute
   '/admin/menu': typeof AdminMenuIndexRoute
   '/admin/page': typeof AdminPageIndexRoute
-  '/admin/setting': typeof AdminSettingIndexRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr': typeof DemoStartSsrIndexRoute
+  '/admin/settings': typeof AdminSettingsIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdIndexRoute
+  '/admin/products/list': typeof AdminProductsListIndexRoute
 }
 export interface FileRoutesByTo {
   '/$': typeof SplatRoute
@@ -247,27 +205,21 @@ export interface FileRoutesByTo {
   '/todos': typeof UserTodosRoute
   '/user': typeof UserUserRoute
   '/admin/$': typeof AdminSplatRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/': typeof PublicIndexRoute
   '/admin': typeof AdminIndexRoute
   '/admin/posts/$postId': typeof AdminPostsPostIdRoute
   '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
+  '/admin/products/category': typeof AdminProductsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/admin/category': typeof AdminCategoryIndexRoute
   '/admin/media': typeof AdminMediaIndexRoute
   '/admin/menu': typeof AdminMenuIndexRoute
   '/admin/page': typeof AdminPageIndexRoute
-  '/admin/setting': typeof AdminSettingIndexRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr': typeof DemoStartSsrIndexRoute
+  '/admin/settings': typeof AdminSettingsIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdIndexRoute
+  '/admin/products/list': typeof AdminProductsListIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -283,27 +235,21 @@ export interface FileRoutesById {
   '/_user/todos': typeof UserTodosRoute
   '/_user/user': typeof UserUserRoute
   '/admin/$': typeof AdminSplatRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/posts/$postId': typeof AdminPostsPostIdRoute
   '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
+  '/admin/products/category': typeof AdminProductsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
   '/admin/category/': typeof AdminCategoryIndexRoute
   '/admin/media/': typeof AdminMediaIndexRoute
   '/admin/menu/': typeof AdminMenuIndexRoute
   '/admin/page/': typeof AdminPageIndexRoute
-  '/admin/setting/': typeof AdminSettingIndexRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
+  '/admin/settings/': typeof AdminSettingsIndexRoute
+  '/admin/products/$id/': typeof AdminProductsIdIndexRoute
+  '/admin/products/list/': typeof AdminProductsListIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -317,27 +263,21 @@ export interface FileRouteTypes {
     | '/todos'
     | '/user'
     | '/admin/$'
-    | '/demo/tanstack-query'
     | '/'
     | '/admin/'
     | '/admin/posts/$postId'
     | '/admin/posts/category'
     | '/admin/posts/create'
     | '/admin/posts/list'
+    | '/admin/products/category'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/api/tq-todos'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/admin/category'
     | '/admin/media'
     | '/admin/menu'
     | '/admin/page'
-    | '/admin/setting'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr'
+    | '/admin/settings'
+    | '/admin/products/$id'
+    | '/admin/products/list'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$'
@@ -348,27 +288,21 @@ export interface FileRouteTypes {
     | '/todos'
     | '/user'
     | '/admin/$'
-    | '/demo/tanstack-query'
     | '/'
     | '/admin'
     | '/admin/posts/$postId'
     | '/admin/posts/category'
     | '/admin/posts/create'
     | '/admin/posts/list'
+    | '/admin/products/category'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/api/tq-todos'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/admin/category'
     | '/admin/media'
     | '/admin/menu'
     | '/admin/page'
-    | '/admin/setting'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr'
+    | '/admin/settings'
+    | '/admin/products/$id'
+    | '/admin/products/list'
   id:
     | '__root__'
     | '/(sign)'
@@ -383,27 +317,21 @@ export interface FileRouteTypes {
     | '/_user/todos'
     | '/_user/user'
     | '/admin/$'
-    | '/demo/tanstack-query'
     | '/_public/'
     | '/admin/'
     | '/admin/posts/$postId'
     | '/admin/posts/category'
     | '/admin/posts/create'
     | '/admin/posts/list'
+    | '/admin/products/category'
     | '/api/auth/$'
-    | '/demo/api/names'
-    | '/demo/api/tq-todos'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
     | '/admin/category/'
     | '/admin/media/'
     | '/admin/menu/'
     | '/admin/page/'
-    | '/admin/setting/'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr/'
+    | '/admin/settings/'
+    | '/admin/products/$id/'
+    | '/admin/products/list/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -412,16 +340,7 @@ export interface RootRouteChildren {
   UserRouteRoute: typeof UserRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   SplatRoute: typeof SplatRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  DemoApiNamesRoute: typeof DemoApiNamesRoute
-  DemoApiTqTodosRoute: typeof DemoApiTqTodosRoute
-  DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
-  DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
-  DemoStartSsrDataOnlyRoute: typeof DemoStartSsrDataOnlyRoute
-  DemoStartSsrFullSsrRoute: typeof DemoStartSsrFullSsrRoute
-  DemoStartSsrSpaModeRoute: typeof DemoStartSsrSpaModeRoute
-  DemoStartSsrIndexRoute: typeof DemoStartSsrIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -475,13 +394,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/$': {
       id: '/admin/$'
       path: '/$'
@@ -531,11 +443,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof signSignInRouteImport
       parentRoute: typeof signRouteRoute
     }
-    '/admin/setting/': {
-      id: '/admin/setting/'
-      path: '/setting'
-      fullPath: '/admin/setting'
-      preLoaderRoute: typeof AdminSettingIndexRouteImport
+    '/admin/settings/': {
+      id: '/admin/settings/'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/page/': {
@@ -566,40 +478,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCategoryIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/demo/start/server-funcs': {
-      id: '/demo/start/server-funcs'
-      path: '/demo/start/server-funcs'
-      fullPath: '/demo/start/server-funcs'
-      preLoaderRoute: typeof DemoStartServerFuncsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/api-request': {
-      id: '/demo/start/api-request'
-      path: '/demo/start/api-request'
-      fullPath: '/demo/start/api-request'
-      preLoaderRoute: typeof DemoStartApiRequestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/api/tq-todos': {
-      id: '/demo/api/tq-todos'
-      path: '/demo/api/tq-todos'
-      fullPath: '/demo/api/tq-todos'
-      preLoaderRoute: typeof DemoApiTqTodosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/api/names': {
-      id: '/demo/api/names'
-      path: '/demo/api/names'
-      fullPath: '/demo/api/names'
-      preLoaderRoute: typeof DemoApiNamesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/products/category': {
+      id: '/admin/products/category'
+      path: '/products/category'
+      fullPath: '/admin/products/category'
+      preLoaderRoute: typeof AdminProductsCategoryRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/admin/posts/list': {
       id: '/admin/posts/list'
@@ -629,33 +520,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsPostIdRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/demo/start/ssr/': {
-      id: '/demo/start/ssr/'
-      path: '/demo/start/ssr'
-      fullPath: '/demo/start/ssr'
-      preLoaderRoute: typeof DemoStartSsrIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/products/list/': {
+      id: '/admin/products/list/'
+      path: '/products/list'
+      fullPath: '/admin/products/list'
+      preLoaderRoute: typeof AdminProductsListIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/demo/start/ssr/spa-mode': {
-      id: '/demo/start/ssr/spa-mode'
-      path: '/demo/start/ssr/spa-mode'
-      fullPath: '/demo/start/ssr/spa-mode'
-      preLoaderRoute: typeof DemoStartSsrSpaModeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/full-ssr': {
-      id: '/demo/start/ssr/full-ssr'
-      path: '/demo/start/ssr/full-ssr'
-      fullPath: '/demo/start/ssr/full-ssr'
-      preLoaderRoute: typeof DemoStartSsrFullSsrRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/data-only': {
-      id: '/demo/start/ssr/data-only'
-      path: '/demo/start/ssr/data-only'
-      fullPath: '/demo/start/ssr/data-only'
-      preLoaderRoute: typeof DemoStartSsrDataOnlyRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/products/$id/': {
+      id: '/admin/products/$id/'
+      path: '/products/$id'
+      fullPath: '/admin/products/$id'
+      preLoaderRoute: typeof AdminProductsIdIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
   }
 }
@@ -711,11 +588,14 @@ interface AdminRouteRouteChildren {
   AdminPostsCategoryRoute: typeof AdminPostsCategoryRoute
   AdminPostsCreateRoute: typeof AdminPostsCreateRoute
   AdminPostsListRoute: typeof AdminPostsListRoute
+  AdminProductsCategoryRoute: typeof AdminProductsCategoryRoute
   AdminCategoryIndexRoute: typeof AdminCategoryIndexRoute
   AdminMediaIndexRoute: typeof AdminMediaIndexRoute
   AdminMenuIndexRoute: typeof AdminMenuIndexRoute
   AdminPageIndexRoute: typeof AdminPageIndexRoute
-  AdminSettingIndexRoute: typeof AdminSettingIndexRoute
+  AdminSettingsIndexRoute: typeof AdminSettingsIndexRoute
+  AdminProductsIdIndexRoute: typeof AdminProductsIdIndexRoute
+  AdminProductsListIndexRoute: typeof AdminProductsListIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
@@ -725,11 +605,14 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminPostsCategoryRoute: AdminPostsCategoryRoute,
   AdminPostsCreateRoute: AdminPostsCreateRoute,
   AdminPostsListRoute: AdminPostsListRoute,
+  AdminProductsCategoryRoute: AdminProductsCategoryRoute,
   AdminCategoryIndexRoute: AdminCategoryIndexRoute,
   AdminMediaIndexRoute: AdminMediaIndexRoute,
   AdminMenuIndexRoute: AdminMenuIndexRoute,
   AdminPageIndexRoute: AdminPageIndexRoute,
-  AdminSettingIndexRoute: AdminSettingIndexRoute,
+  AdminSettingsIndexRoute: AdminSettingsIndexRoute,
+  AdminProductsIdIndexRoute: AdminProductsIdIndexRoute,
+  AdminProductsListIndexRoute: AdminProductsListIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
@@ -742,16 +625,7 @@ const rootRouteChildren: RootRouteChildren = {
   UserRouteRoute: UserRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   SplatRoute: SplatRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  DemoApiNamesRoute: DemoApiNamesRoute,
-  DemoApiTqTodosRoute: DemoApiTqTodosRoute,
-  DemoStartApiRequestRoute: DemoStartApiRequestRoute,
-  DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
-  DemoStartSsrDataOnlyRoute: DemoStartSsrDataOnlyRoute,
-  DemoStartSsrFullSsrRoute: DemoStartSsrFullSsrRoute,
-  DemoStartSsrSpaModeRoute: DemoStartSsrSpaModeRoute,
-  DemoStartSsrIndexRoute: DemoStartSsrIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

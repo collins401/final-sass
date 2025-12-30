@@ -1,8 +1,10 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import { format } from "date-fns";
-import { ChevronLeft, ChevronRight, Pencil, Plus, Trash } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Trash } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { z } from "zod";
+import { PageTitle } from "@/components/admin/page-title";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -49,13 +51,36 @@ function PostsPage() {
   const postsQuery = useSuspenseQuery(postsQueryOptions(search));
   const { posts, total, page, pageSize } = postsQuery.data;
 
-  const totalPages = Math.ceil(total / pageSize);
+  // Local state for search input
+  const [searchValue, setSearchValue] = useState(search.title || "");
 
-  const handleSearch = (key: keyof typeof search, value: string | number) => {
-    navigate({
-      search: (prev) => ({ ...prev, [key]: value, page: 1 }), // Reset to page 1 on filter change
-    });
-  };
+  // Sync local state with URL search param when it changes externally
+  useEffect(() => {
+    setSearchValue(search.title || "");
+  }, [search.title]);
+
+  const handleSearch = useCallback(
+    (key: keyof typeof search, value: string | number) => {
+      navigate({
+        search: (prev) => ({ ...prev, [key]: value, page: 1 }), // Reset to page 1 on filter change
+      });
+    },
+    [navigate]
+  );
+
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // Only navigate if the value has changed
+      if (searchValue !== (search.title || "")) {
+        handleSearch("title", searchValue);
+      }
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchValue, search.title, handleSearch]);
+
+  const totalPages = Math.ceil(total / pageSize);
 
   const handlePageChange = (newPage: number) => {
     navigate({
@@ -63,134 +88,143 @@ function PostsPage() {
     });
   };
 
+  const statusMap: Record<string, string> = {
+    published: "已发布",
+    draft: "草稿",
+    archived: "已归档",
+  };
+
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-bold text-3xl tracking-tight">Posts</h1>
-          <p className="text-muted-foreground">Manage your blog posts here.</p>
+    <div className="space-y-6">
+      <PageTitle
+        description="在此管理您的博客文章。"
+        extra={
+          <Button asChild>
+            <Link to="/admin/posts/create">
+              <Plus className="h-4 w-4" />
+              新建文章
+            </Link>
+          </Button>
+        }
+        title="文章管理"
+      />
+      <div className="space-y-3">
+        <div className="flex items-center gap-4">
+          <Input
+            className="max-w-sm"
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder="按标题搜索..."
+            value={searchValue}
+          />
+          <Select onValueChange={(value) => handleSearch("status", value)} value={search.status}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="状态" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">全部状态</SelectItem>
+              <SelectItem value="published">已发布</SelectItem>
+              <SelectItem value="draft">草稿</SelectItem>
+              <SelectItem value="archived">已归档</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <Button asChild>
-          <Link to="/admin/posts/create">
-            <Plus className="mr-2 h-4 w-4" />
-            New Post
-          </Link>
-        </Button>
-      </div>
 
-      <div className="flex items-center gap-4">
-        <Input
-          className="max-w-sm"
-          onChange={(e) => handleSearch("title", e.target.value)}
-          placeholder="Search by title..."
-          value={search.title || ""}
-        />
-        <Select onValueChange={(value) => handleSearch("status", value)} value={search.status}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="published">Published</SelectItem>
-            <SelectItem value="draft">Draft</SelectItem>
-            <SelectItem value="archived">Archived</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Author</TableHead>
-              <TableHead>Published</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {posts.length === 0 ? (
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell className="h-24 text-center" colSpan={6}>
-                  No posts found.
-                </TableCell>
+                <TableHead>标题</TableHead>
+                <TableHead>状态</TableHead>
+                <TableHead>分类</TableHead>
+                <TableHead>作者</TableHead>
+                <TableHead>发布日期</TableHead>
+                <TableHead className="text-right">操作</TableHead>
               </TableRow>
-            ) : (
-              posts.map((post) => (
-                <TableRow key={post.id}>
-                  <TableCell className="font-medium">
-                    <div className="flex flex-col">
-                      <span>{post.title}</span>
-                      <span className="text-muted-foreground text-xs">{post.slug}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium text-xs ${
-                        post.status === "published"
-                          ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                          : post.status === "draft"
-                            ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                            : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300"
-                      }`}
-                    >
-                      {post.status}
-                    </span>
-                  </TableCell>
-                  <TableCell>{post.categoryName || "-"}</TableCell>
-                  <TableCell>{post.authorName || "-"}</TableCell>
-                  <TableCell>
-                    {post.publishedAt ? format(new Date(post.publishedAt), "MMM d, yyyy") : "-"}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button asChild size="icon" variant="ghost">
-                        <Link params={{ postId: post.id.toString() }} to="/admin/posts/$postId">
-                          <Pencil className="h-4 w-4" />
-                        </Link>
-                      </Button>
-                      <Button
-                        className="text-red-500 hover:text-red-600"
-                        size="icon"
-                        variant="ghost"
-                      >
-                        <Trash className="h-4 w-4" />
-                      </Button>
-                    </div>
+            </TableHeader>
+            <TableBody>
+              {posts.length === 0 ? (
+                <TableRow>
+                  <TableCell className="h-24 text-center" colSpan={6}>
+                    暂无文章。
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
-
-      <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="text-muted-foreground text-sm">
-          Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, total)} of {total}{" "}
-          results
+              ) : (
+                posts.map((post) => (
+                  <TableRow key={post.id}>
+                    <TableCell className="font-medium">
+                      <div className="flex flex-col">
+                        <Link
+                          className="text-blue-500"
+                          params={{ postId: String(post.id) }}
+                          to="/admin/posts/$postId"
+                        >
+                          {post.title}
+                        </Link>
+                        <span className="text-muted-foreground text-xs">URL:/{post.slug}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium text-xs ${
+                          post.status === "published"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                            : post.status === "draft"
+                              ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+                              : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300"
+                        }`}
+                      >
+                        {statusMap[post.status] || post.status}
+                      </span>
+                    </TableCell>
+                    <TableCell>{post.categoryName || "-"}</TableCell>
+                    <TableCell>{post.authorName || "-"}</TableCell>
+                    <TableCell>
+                      {post.publishedAt ? format(new Date(post.publishedAt), "yyyy-MM-dd") : "-"}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          className="text-red-500 hover:text-red-600"
+                          size="icon"
+                          variant="ghost"
+                        >
+                          {/* 删除 */}
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
         </div>
-        <div className="space-x-2">
-          <Button
-            disabled={page <= 1}
-            onClick={() => handlePageChange(page - 1)}
-            size="sm"
-            variant="outline"
-          >
-            <ChevronLeft className="h-4 w-4" />
-            Previous
-          </Button>
-          <Button
-            disabled={page >= totalPages}
-            onClick={() => handlePageChange(page + 1)}
-            size="sm"
-            variant="outline"
-          >
-            Next
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+
+        <div className="flex items-center justify-between space-x-2">
+          <div className="text-muted-foreground text-sm">
+            显示 {(page - 1) * pageSize + 1} 到 {Math.min(page * pageSize, total)} 条，共 {total}{" "}
+            条结果
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              disabled={page <= 1}
+              onClick={() => handlePageChange(page - 1)}
+              size="sm"
+              variant="outline"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              上一页
+            </Button>
+            <Button
+              disabled={page >= totalPages}
+              onClick={() => handlePageChange(page + 1)}
+              size="sm"
+              variant="outline"
+            >
+              下一页
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

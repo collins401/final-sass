@@ -1,7 +1,5 @@
-
-import { db } from "./src/lib/db";
-import { post, user } from "./src/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { db } from "./src/db";
+import { post, user } from "./src/db/schema";
 
 async function seed() {
   console.log("Seeding posts...");
@@ -12,14 +10,17 @@ async function seed() {
 
   if (!authorId) {
     console.log("No users found. Creating a dummy user...");
-    const [newUser] = await db.insert(user).values({
-      id: "dummy-user-" + Date.now(),
-      name: "Demo User",
-      email: "demo@example.com",
-      emailVerified: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }).returning();
+    const [newUser] = await db
+      .insert(user)
+      .values({
+        id: "dummy-user-" + Date.now(),
+        name: "Demo User",
+        email: "demo@example.com",
+        emailVerified: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .returning();
     authorId = newUser.id;
   }
 
