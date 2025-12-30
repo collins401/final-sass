@@ -21,6 +21,7 @@ import { Route as UserUserRouteImport } from './routes/_user/user'
 import { Route as UserTodosRouteImport } from './routes/_user/todos'
 import { Route as PublicProfileRouteImport } from './routes/_public/profile'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
+import { Route as Public403RouteImport } from './routes/_public/403'
 import { Route as signSignUpRouteImport } from './routes/(sign)/sign-up'
 import { Route as signSignInRouteImport } from './routes/(sign)/sign-in'
 import { Route as AdminSettingsIndexRouteImport } from './routes/admin/settings/index'
@@ -92,6 +93,11 @@ const PublicProfileRoute = PublicProfileRouteImport.update({
 const PublicAboutRoute = PublicAboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const Public403Route = Public403RouteImport.update({
+  id: '/403',
+  path: '/403',
   getParentRoute: () => PublicRouteRoute,
 } as any)
 const signSignUpRoute = signSignUpRouteImport.update({
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/$': typeof SplatRoute
   '/sign-in': typeof signSignInRoute
   '/sign-up': typeof signSignUpRoute
+  '/403': typeof Public403Route
   '/about': typeof PublicAboutRoute
   '/profile': typeof PublicProfileRoute
   '/todos': typeof UserTodosRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/$': typeof SplatRoute
   '/sign-in': typeof signSignInRoute
   '/sign-up': typeof signSignUpRoute
+  '/403': typeof Public403Route
   '/about': typeof PublicAboutRoute
   '/profile': typeof PublicProfileRoute
   '/todos': typeof UserTodosRoute
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/$': typeof SplatRoute
   '/(sign)/sign-in': typeof signSignInRoute
   '/(sign)/sign-up': typeof signSignUpRoute
+  '/_public/403': typeof Public403Route
   '/_public/about': typeof PublicAboutRoute
   '/_public/profile': typeof PublicProfileRoute
   '/_user/todos': typeof UserTodosRoute
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/sign-in'
     | '/sign-up'
+    | '/403'
     | '/about'
     | '/profile'
     | '/todos'
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/sign-in'
     | '/sign-up'
+    | '/403'
     | '/about'
     | '/profile'
     | '/todos'
@@ -312,6 +323,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/(sign)/sign-in'
     | '/(sign)/sign-up'
+    | '/_public/403'
     | '/_public/about'
     | '/_public/profile'
     | '/_user/todos'
@@ -427,6 +439,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof PublicAboutRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/403': {
+      id: '/_public/403'
+      path: '/403'
+      fullPath: '/403'
+      preLoaderRoute: typeof Public403RouteImport
       parentRoute: typeof PublicRouteRoute
     }
     '/(sign)/sign-up': {
@@ -552,12 +571,14 @@ const signRouteRouteWithChildren = signRouteRoute._addFileChildren(
 )
 
 interface PublicRouteRouteChildren {
+  Public403Route: typeof Public403Route
   PublicAboutRoute: typeof PublicAboutRoute
   PublicProfileRoute: typeof PublicProfileRoute
   PublicIndexRoute: typeof PublicIndexRoute
 }
 
 const PublicRouteRouteChildren: PublicRouteRouteChildren = {
+  Public403Route: Public403Route,
   PublicAboutRoute: PublicAboutRoute,
   PublicProfileRoute: PublicProfileRoute,
   PublicIndexRoute: PublicIndexRoute,

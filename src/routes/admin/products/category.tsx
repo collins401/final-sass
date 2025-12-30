@@ -9,7 +9,7 @@ function RouteComponent() {
   return (
     <div>
       {/* id=1 为产品分类的总 ID，下面的所有的产品分类都是 1 的字类  */}
-      <CategoryManager id={1} />
+      <CategoryManager id={2} />
     </div>
   );
 }

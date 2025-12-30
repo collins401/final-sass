@@ -8,17 +8,15 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Button } from "./ui/button";
-export function NotFound({ children }: { children?: any }) {
+export function DataEmpty({ children }: { children?: any }) {
   return (
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <Ship />
         </EmptyMedia>
-        <EmptyTitle>Page Not Found</EmptyTitle>
-        <EmptyDescription>
-          The page you are looking for doesn&apos;t exist or has been moved.
-        </EmptyDescription>
+        <EmptyTitle>Data Empty</EmptyTitle>
+        <EmptyDescription>No data found.</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <div className="flex gap-2">

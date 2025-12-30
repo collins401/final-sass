@@ -36,8 +36,7 @@ export const Route = createFileRoute("/admin")({
     // 检查是否为管理员
     if (session.user.role !== "admin") {
       throw redirect({
-        to: "/",
-        statusCode: 403,
+        to: "/403",
       });
     }
 
@@ -73,8 +72,8 @@ function RouteComponent() {
   const breadcrumbs = getCurPageMenu();
 
   return (
-    <SidebarProvider>
-      <NavigationProgress />
+    <SidebarProvider style={{ "--primary": "oklch(0.7686 0.1647 70.0804)" } as React.CSSProperties}>
+      <NavigationProgress color="var(--primary)" />
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-2 border-b">

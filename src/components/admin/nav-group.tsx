@@ -59,7 +59,7 @@ const SidebarMenuLink = ({ item, href }: { item: NavItemLink; href: string }) =>
     <SidebarMenuItem>
       <SidebarMenuButton
         asChild
-        className="group data-[active=true]:bg-blue-400 data-[active=true]:text-white"
+        className="group data-[active=true]:bg-primary data-[active=true]:text-white"
         isActive={isActiveLink(href, item.url)}
         tooltip={item.title}
       >
@@ -99,7 +99,7 @@ const SidebarMenuCollapsible = ({ item, href }: { item: NavItemCollapsible; href
               <SidebarMenuSubItem key={subItem.title}>
                 <SidebarMenuSubButton
                   asChild
-                  className="data-[active=true]:bg-blue-400 data-[active=true]:text-white"
+                  className="data-[active=true]:bg-primary data-[active=true]:text-white"
                   isActive={isActiveLink(href, subItem.url)}
                 >
                   <Link onClick={() => setOpenMobile(false)} preload="intent" to={subItem.url}>

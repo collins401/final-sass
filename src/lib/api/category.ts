@@ -13,26 +13,50 @@ const categorySchema = z.object({
   isActive: z.boolean().default(true),
 });
 
-export const getCategories = createServerFn({ method: "GET" }).handler(async () => {
-  const categories = await db
-    .select({
-      id: category.id,
-      name: category.name,
-      slug: category.slug,
-      description: category.description,
-      parentId: category.parentId,
-      sortOrder: category.sortOrder,
-      isActive: category.isActive,
-      createdAt: category.createdAt,
-      updatedAt: category.updatedAt,
-      count:
-        sql<number>`(SELECT COUNT(*) FROM ${post} WHERE ${post.categoryId} = ${category.id})`.mapWith(
-          Number
-        ),
-    })
-    .from(category);
-  return categories;
-});
+export const getCategories = createServerFn({ method: "GET" })
+  .inputValidator(z.number().optional())
+  .handler(async ({ data: parentId }) => {
+    // 首先获取所有分类
+    const allCategories = await db
+      .select({
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+        description: category.description,
+        parentId: category.parentId,
+        sortOrder: category.sortOrder,
+        isActive: category.isActive,
+        createdAt: category.createdAt,
+        updatedAt: category.updatedAt,
+        count:
+          sql<number>`(SELECT COUNT(*) FROM ${post} WHERE ${post.categoryId} = ${category.id})`.mapWith(
+            Number
+          ),
+      })
+      .from(category);
+
+    // 如果没有指定 parentId，返回所有分类
+    if (parentId === undefined) {
+      return allCategories;
+    }
+
+    // 递归函数：获取指定 ID 下的所有子孙分类
+    const getDescendants = (id: number): typeof allCategories => {
+      const children = allCategories.filter((cat) => cat.parentId === id);
+      const descendants = [...children];
+
+      for (const child of children) {
+        descendants.push(...getDescendants(child.id));
+      }
+
+      return descendants;
+    };
+
+    // 获取指定 parentId 的所有子孙分类
+    const descendants = getDescendants(parentId);
+
+    return descendants;
+  });
 
 export const createCategory = createServerFn({ method: "POST" })
   .inputValidator((data: z.infer<typeof categorySchema>) => categorySchema.parse(data))

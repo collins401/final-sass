@@ -6,7 +6,7 @@ import { createPost } from "@/lib/api/posts";
 
 export const Route = createFileRoute("/admin/posts/create")({
   component: CreatePostPage,
-  loader: () => getCategories(),
+  loader: () => getCategories({ data: 1 }),
 });
 
 function CreatePostPage() {
@@ -18,7 +18,7 @@ function CreatePostPage() {
       await createPost({
         data: {
           ...data,
-          categoryId: data.categoryId ? Number.parseInt(data.categoryId) : undefined,
+          categoryId: data.categoryId ? Number(data.categoryId) : undefined,
         },
       });
       toast.success("Post created successfully");
