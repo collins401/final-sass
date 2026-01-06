@@ -1,20 +1,14 @@
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
+import { Loader2 } from "lucide-react";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth/auth.client";
+
 export const Route = createFileRoute("/(sign)/sign-in")({
   component: RouteComponent,
   validateSearch: z.object({
@@ -54,7 +48,6 @@ function RouteComponent() {
       }
 
       toast.success("登录成功！正在跳转...");
-      // 跳转到之前的页面，或者首页
       window.location.href = search.redirect || "/";
     } catch (error) {
       console.error("登录错误:", error);
@@ -65,19 +58,24 @@ function RouteComponent() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-background to-muted p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="font-bold text-2xl">欢迎回来</CardTitle>
-          <CardDescription>输入您的邮箱和密码以登录账户</CardDescription>
-        </CardHeader>
+    <div className="flex h-full items-center justify-center p-4 lg:p-8">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+        <div className="flex flex-col space-y-2 text-center">
+          <h1 className="font-semibold text-2xl tracking-tight">欢迎回来</h1>
+          <p className="text-muted-foreground text-sm">请输入您的邮箱以登录账户</p>
+        </div>
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
+          <div className="grid gap-4">
+            <div className="grid gap-2">
               <Label htmlFor={emailId}>邮箱</Label>
               <Input
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect="off"
+                disabled={isLoading}
                 id={emailId}
-                placeholder="example@email.com"
+                placeholder="name@example.com"
                 type="email"
                 {...register("email", {
                   required: "请输入邮箱",
@@ -86,48 +84,53 @@ function RouteComponent() {
                     message: "请输入有效的邮箱地址",
                   },
                 })}
-                aria-invalid={!!errors.email}
               />
               {errors.email && <p className="text-destructive text-sm">{errors.email.message}</p>}
             </div>
 
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor={passwordId}>密码</Label>
                 <Link
-                  className="text-muted-foreground text-xs hover:text-primary hover:underline"
+                  className="font-medium text-muted-foreground text-sm hover:text-primary hover:underline"
                   to="/"
                 >
                   忘记密码？
                 </Link>
               </div>
               <Input
+                autoCapitalize="none"
+                autoComplete="current-password"
+                disabled={isLoading}
                 id={passwordId}
                 placeholder="••••••••"
                 type="password"
                 {...register("password", {
                   required: "请输入密码",
                 })}
-                aria-invalid={!!errors.password}
               />
               {errors.password && (
                 <p className="text-destructive text-sm">{errors.password.message}</p>
               )}
             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col gap-4">
-            <Button className="w-full" disabled={isLoading} type="submit">
-              {isLoading ? "登录中..." : "登录"}
+
+            <Button className="w-full" disabled={isLoading}>
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              登录
             </Button>
-            <div className="text-center text-muted-foreground text-sm">
-              还没有账户？{" "}
-              <Link className="font-medium text-primary hover:underline" to="/sign-up">
-                立即注册
-              </Link>
-            </div>
-          </CardFooter>
+          </div>
         </form>
-      </Card>
+
+        <p className="px-8 text-center text-muted-foreground text-sm">
+          还没有账户？{" "}
+          <Link
+            className="font-semibold text-primary underline-offset-4 hover:underline"
+            to="/sign-up"
+          >
+            立即注册
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

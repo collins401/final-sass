@@ -25,10 +25,10 @@ import {
 import { getPosts } from "@/lib/api/posts";
 
 const postsSearchSchema = z.object({
-  page: z.number().catch(1),
-  pageSize: z.number().catch(10),
+  page: z.number().default(1),
+  pageSize: z.number().default(10),
   title: z.string().optional(),
-  status: z.enum(["draft", "published", "archived", "all"]).catch("all"),
+  status: z.enum(["draft", "published", "archived", "all"]).default("all"),
 });
 
 const postsQueryOptions = (search: z.infer<typeof postsSearchSchema>) =>

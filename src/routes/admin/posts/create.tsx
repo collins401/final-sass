@@ -22,7 +22,7 @@ function CreatePostPage() {
         },
       });
       toast.success("Post created successfully");
-      navigate({ to: "/admin/posts" });
+      navigate({ to: "/admin/posts/list" });
     } catch (error) {
       console.error(error);
       toast.error("Failed to create post");
