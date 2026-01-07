@@ -3,6 +3,7 @@ import { and, desc, eq, like, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
 import { category, post, user } from "@/db/schema";
+import { authMiddleware } from "../auth/auth.middleware";
 
 const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -15,6 +16,7 @@ const postSchema = z.object({
 });
 
 export const getPosts = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
   .inputValidator(
     z
       .object({
@@ -71,6 +73,7 @@ export const getPosts = createServerFn({ method: "GET" })
   });
 
 export const getPost = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
   .inputValidator((id: number) => id)
   .handler(async ({ data: id }) => {
     const [foundPost] = await db.select().from(post).where(eq(post.id, id)).limit(1);
@@ -78,6 +81,7 @@ export const getPost = createServerFn({ method: "GET" })
   });
 
 export const createPost = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: z.infer<typeof postSchema>) => postSchema.parse(data))
   .handler(async ({ data }) => {
     // In a real app, you'd get the current user ID from the session
@@ -99,6 +103,7 @@ export const createPost = createServerFn({ method: "POST" })
   });
 
 export const updatePost = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: { id: number; data: Partial<z.infer<typeof postSchema>> }) => data)
   .handler(async ({ data }) => {
     const [updatedPost] = await db
@@ -115,6 +120,7 @@ export const updatePost = createServerFn({ method: "POST" })
   });
 
 export const deletePost = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((id: number) => id)
   .handler(async ({ data: id }) => {
     await db.delete(post).where(eq(post.id, id));

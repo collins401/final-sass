@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect, useLocation } from "@tanstack/react-router";
-import { PanelLeftRightDashed, PanelTopBottomDashed } from "lucide-react";
+import { AlignCenter, StretchHorizontal } from "lucide-react";
 import { Suspense, useState } from "react";
 import { AppSidebar } from "@/components/admin/app-sidebar";
 import { navigationGroups } from "@/components/admin/navigation";
@@ -106,28 +106,20 @@ function RouteComponent() {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-muted-foreground">
               <Tooltip>
                 <TooltipTrigger>
                   {contentWidth === "w-full" ? (
-                    <PanelTopBottomDashed
-                      onClick={() => setContentWidth("max-w-[1000px]")}
-                      size={20}
-                    />
+                    <AlignCenter onClick={() => setContentWidth("max-w-[1000px]")} size={20} />
                   ) : (
-                    <PanelLeftRightDashed onClick={() => setContentWidth("w-full")} size={20} />
+                    <StretchHorizontal onClick={() => setContentWidth("w-full")} size={20} />
                   )}
                 </TooltipTrigger>
                 <TooltipContent>
                   {contentWidth === "w-full" ? "内容居中" : "内容适宽"}
                 </TooltipContent>
               </Tooltip>
-              {/* <Sliders
-                onClick={() =>
-                  setContentWidth(contentWidth === "max-w-[1000px]" ? "w-full" : "max-w-[1000px]")
-                }
-              /> */}
-              <ModeToggle />
+              <ModeToggle className="text-muted-foreground" />
             </div>
           </div>
         </header>

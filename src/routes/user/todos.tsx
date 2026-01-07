@@ -8,9 +8,9 @@ import { db } from "@/db";
 import { todo } from "@/db/schema";
 import { adminMiddleware, authMiddleware } from "@/lib/auth/auth.middleware";
 
-const getTodos = createServerFn({ method: "GET" }).handler(
-  async () => await db.select().from(todo)
-);
+const getTodos = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
+  .handler(async () => await db.select().from(todo));
 
 const addTodo = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
@@ -33,7 +33,7 @@ const deleteTodo = createServerFn({ method: "POST" })
     await db.delete(todo).where(eq(todo.id, data));
   });
 
-export const Route = createFileRoute("/_user/todos")({
+export const Route = createFileRoute("/user/todos")({
   component: Home,
   loader: async () => await getTodos(),
 });

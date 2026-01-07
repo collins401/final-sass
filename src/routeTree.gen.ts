@@ -10,31 +10,37 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as UserRouteRouteImport } from './routes/user/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
-import { Route as UserRouteRouteImport } from './routes/_user/route'
 import { Route as PublicRouteRouteImport } from './routes/_public/route'
 import { Route as signRouteRouteImport } from './routes/(sign)/route'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as UserIndexRouteImport } from './routes/user/index'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as UserTodosRouteImport } from './routes/user/todos'
 import { Route as AdminSplatRouteImport } from './routes/admin/$'
-import { Route as UserUserRouteImport } from './routes/_user/user'
-import { Route as UserTodosRouteImport } from './routes/_user/todos'
 import { Route as PublicProfileRouteImport } from './routes/_public/profile'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as Public403RouteImport } from './routes/_public/403'
 import { Route as signSignUpRouteImport } from './routes/(sign)/sign-up'
 import { Route as signSignInRouteImport } from './routes/(sign)/sign-in'
+import { Route as AdminUsersIndexRouteImport } from './routes/admin/users/index'
 import { Route as AdminSettingsIndexRouteImport } from './routes/admin/settings/index'
-import { Route as AdminPageIndexRouteImport } from './routes/admin/page/index'
+import { Route as AdminPagesIndexRouteImport } from './routes/admin/pages/index'
 import { Route as AdminMenuIndexRouteImport } from './routes/admin/menu/index'
 import { Route as AdminMediaIndexRouteImport } from './routes/admin/media/index'
+import { Route as AdminJobsIndexRouteImport } from './routes/admin/jobs/index'
 import { Route as AdminCategoryIndexRouteImport } from './routes/admin/category/index'
+import { Route as AdminIndexIndexRouteImport } from './routes/admin/_index/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as AdminProductsCategoryRouteImport } from './routes/admin/products/category'
 import { Route as AdminPostsListRouteImport } from './routes/admin/posts/list'
 import { Route as AdminPostsCreateRouteImport } from './routes/admin/posts/create'
 import { Route as AdminPostsCategoryRouteImport } from './routes/admin/posts/category'
 import { Route as AdminPostsPostIdRouteImport } from './routes/admin/posts/$postId'
+import { Route as AdminPagesCreateRouteImport } from './routes/admin/pages/create'
+import { Route as AdminPagesPageIdRouteImport } from './routes/admin/pages/$pageId'
+import { Route as AdminJobsCreateRouteImport } from './routes/admin/jobs/create'
+import { Route as AdminJobsJobIdRouteImport } from './routes/admin/jobs/$jobId'
 import { Route as AdminProductsListIndexRouteImport } from './routes/admin/products/list/index'
 import { Route as AdminProductsIdIndexRouteImport } from './routes/admin/products/$id/index'
 
@@ -43,13 +49,14 @@ const SplatRoute = SplatRouteImport.update({
   path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UserRouteRoute = UserRouteRouteImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UserRouteRoute = UserRouteRouteImport.update({
-  id: '/_user',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicRouteRoute = PublicRouteRouteImport.update({
@@ -60,30 +67,25 @@ const signRouteRoute = signRouteRouteImport.update({
   id: '/(sign)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
+const UserIndexRoute = UserIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AdminRouteRoute,
+  getParentRoute: () => UserRouteRoute,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const AdminSplatRoute = AdminSplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const UserUserRoute = UserUserRouteImport.update({
-  id: '/user',
-  path: '/user',
-  getParentRoute: () => UserRouteRoute,
-} as any)
 const UserTodosRoute = UserTodosRouteImport.update({
   id: '/todos',
   path: '/todos',
   getParentRoute: () => UserRouteRoute,
+} as any)
+const AdminSplatRoute = AdminSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const PublicProfileRoute = PublicProfileRouteImport.update({
   id: '/profile',
@@ -110,14 +112,19 @@ const signSignInRoute = signSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => signRouteRoute,
 } as any)
+const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminSettingsIndexRoute = AdminSettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminPageIndexRoute = AdminPageIndexRouteImport.update({
-  id: '/page/',
-  path: '/page/',
+const AdminPagesIndexRoute = AdminPagesIndexRouteImport.update({
+  id: '/pages/',
+  path: '/pages/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminMenuIndexRoute = AdminMenuIndexRouteImport.update({
@@ -130,9 +137,19 @@ const AdminMediaIndexRoute = AdminMediaIndexRouteImport.update({
   path: '/media/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminJobsIndexRoute = AdminJobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminCategoryIndexRoute = AdminCategoryIndexRouteImport.update({
   id: '/category/',
   path: '/category/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminIndexIndexRoute = AdminIndexIndexRouteImport.update({
+  id: '/_index/',
+  path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -165,6 +182,26 @@ const AdminPostsPostIdRoute = AdminPostsPostIdRouteImport.update({
   path: '/posts/$postId',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminPagesCreateRoute = AdminPagesCreateRouteImport.update({
+  id: '/pages/create',
+  path: '/pages/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPagesPageIdRoute = AdminPagesPageIdRouteImport.update({
+  id: '/pages/$pageId',
+  path: '/pages/$pageId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminJobsCreateRoute = AdminJobsCreateRouteImport.update({
+  id: '/jobs/create',
+  path: '/jobs/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminJobsJobIdRoute = AdminJobsJobIdRouteImport.update({
+  id: '/jobs/$jobId',
+  path: '/jobs/$jobId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminProductsListIndexRoute = AdminProductsListIndexRouteImport.update({
   id: '/products/list/',
   path: '/products/list/',
@@ -178,28 +215,35 @@ const AdminProductsIdIndexRoute = AdminProductsIdIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
+  '/user': typeof UserRouteRouteWithChildren
   '/$': typeof SplatRoute
   '/sign-in': typeof signSignInRoute
   '/sign-up': typeof signSignUpRoute
   '/403': typeof Public403Route
   '/about': typeof PublicAboutRoute
   '/profile': typeof PublicProfileRoute
-  '/todos': typeof UserTodosRoute
-  '/user': typeof UserUserRoute
   '/admin/$': typeof AdminSplatRoute
+  '/user/todos': typeof UserTodosRoute
   '/': typeof PublicIndexRoute
-  '/admin/': typeof AdminIndexRoute
+  '/user/': typeof UserIndexRoute
+  '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
+  '/admin/jobs/create': typeof AdminJobsCreateRoute
+  '/admin/pages/$pageId': typeof AdminPagesPageIdRoute
+  '/admin/pages/create': typeof AdminPagesCreateRoute
   '/admin/posts/$postId': typeof AdminPostsPostIdRoute
   '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
   '/admin/products/category': typeof AdminProductsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/admin/': typeof AdminIndexIndexRoute
   '/admin/category': typeof AdminCategoryIndexRoute
+  '/admin/jobs': typeof AdminJobsIndexRoute
   '/admin/media': typeof AdminMediaIndexRoute
   '/admin/menu': typeof AdminMenuIndexRoute
-  '/admin/page': typeof AdminPageIndexRoute
+  '/admin/pages': typeof AdminPagesIndexRoute
   '/admin/settings': typeof AdminSettingsIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
   '/admin/products/$id': typeof AdminProductsIdIndexRoute
   '/admin/products/list': typeof AdminProductsListIndexRoute
 }
@@ -210,22 +254,28 @@ export interface FileRoutesByTo {
   '/403': typeof Public403Route
   '/about': typeof PublicAboutRoute
   '/profile': typeof PublicProfileRoute
-  '/todos': typeof UserTodosRoute
-  '/user': typeof UserUserRoute
   '/admin/$': typeof AdminSplatRoute
+  '/user/todos': typeof UserTodosRoute
   '/': typeof PublicIndexRoute
-  '/admin': typeof AdminIndexRoute
+  '/user': typeof UserIndexRoute
+  '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
+  '/admin/jobs/create': typeof AdminJobsCreateRoute
+  '/admin/pages/$pageId': typeof AdminPagesPageIdRoute
+  '/admin/pages/create': typeof AdminPagesCreateRoute
   '/admin/posts/$postId': typeof AdminPostsPostIdRoute
   '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
   '/admin/products/category': typeof AdminProductsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/admin': typeof AdminIndexIndexRoute
   '/admin/category': typeof AdminCategoryIndexRoute
+  '/admin/jobs': typeof AdminJobsIndexRoute
   '/admin/media': typeof AdminMediaIndexRoute
   '/admin/menu': typeof AdminMenuIndexRoute
-  '/admin/page': typeof AdminPageIndexRoute
+  '/admin/pages': typeof AdminPagesIndexRoute
   '/admin/settings': typeof AdminSettingsIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
   '/admin/products/$id': typeof AdminProductsIdIndexRoute
   '/admin/products/list': typeof AdminProductsListIndexRoute
 }
@@ -233,30 +283,36 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(sign)': typeof signRouteRouteWithChildren
   '/_public': typeof PublicRouteRouteWithChildren
-  '/_user': typeof UserRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
+  '/user': typeof UserRouteRouteWithChildren
   '/$': typeof SplatRoute
   '/(sign)/sign-in': typeof signSignInRoute
   '/(sign)/sign-up': typeof signSignUpRoute
   '/_public/403': typeof Public403Route
   '/_public/about': typeof PublicAboutRoute
   '/_public/profile': typeof PublicProfileRoute
-  '/_user/todos': typeof UserTodosRoute
-  '/_user/user': typeof UserUserRoute
   '/admin/$': typeof AdminSplatRoute
+  '/user/todos': typeof UserTodosRoute
   '/_public/': typeof PublicIndexRoute
-  '/admin/': typeof AdminIndexRoute
+  '/user/': typeof UserIndexRoute
+  '/admin/jobs/$jobId': typeof AdminJobsJobIdRoute
+  '/admin/jobs/create': typeof AdminJobsCreateRoute
+  '/admin/pages/$pageId': typeof AdminPagesPageIdRoute
+  '/admin/pages/create': typeof AdminPagesCreateRoute
   '/admin/posts/$postId': typeof AdminPostsPostIdRoute
   '/admin/posts/category': typeof AdminPostsCategoryRoute
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
   '/admin/products/category': typeof AdminProductsCategoryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/admin/_index/': typeof AdminIndexIndexRoute
   '/admin/category/': typeof AdminCategoryIndexRoute
+  '/admin/jobs/': typeof AdminJobsIndexRoute
   '/admin/media/': typeof AdminMediaIndexRoute
   '/admin/menu/': typeof AdminMenuIndexRoute
-  '/admin/page/': typeof AdminPageIndexRoute
+  '/admin/pages/': typeof AdminPagesIndexRoute
   '/admin/settings/': typeof AdminSettingsIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
   '/admin/products/$id/': typeof AdminProductsIdIndexRoute
   '/admin/products/list/': typeof AdminProductsListIndexRoute
 }
@@ -264,28 +320,35 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/admin'
+    | '/user'
     | '/$'
     | '/sign-in'
     | '/sign-up'
     | '/403'
     | '/about'
     | '/profile'
-    | '/todos'
-    | '/user'
     | '/admin/$'
+    | '/user/todos'
     | '/'
-    | '/admin/'
+    | '/user/'
+    | '/admin/jobs/$jobId'
+    | '/admin/jobs/create'
+    | '/admin/pages/$pageId'
+    | '/admin/pages/create'
     | '/admin/posts/$postId'
     | '/admin/posts/category'
     | '/admin/posts/create'
     | '/admin/posts/list'
     | '/admin/products/category'
     | '/api/auth/$'
+    | '/admin/'
     | '/admin/category'
+    | '/admin/jobs'
     | '/admin/media'
     | '/admin/menu'
-    | '/admin/page'
+    | '/admin/pages'
     | '/admin/settings'
+    | '/admin/users'
     | '/admin/products/$id'
     | '/admin/products/list'
   fileRoutesByTo: FileRoutesByTo
@@ -296,52 +359,64 @@ export interface FileRouteTypes {
     | '/403'
     | '/about'
     | '/profile'
-    | '/todos'
-    | '/user'
     | '/admin/$'
+    | '/user/todos'
     | '/'
-    | '/admin'
+    | '/user'
+    | '/admin/jobs/$jobId'
+    | '/admin/jobs/create'
+    | '/admin/pages/$pageId'
+    | '/admin/pages/create'
     | '/admin/posts/$postId'
     | '/admin/posts/category'
     | '/admin/posts/create'
     | '/admin/posts/list'
     | '/admin/products/category'
     | '/api/auth/$'
+    | '/admin'
     | '/admin/category'
+    | '/admin/jobs'
     | '/admin/media'
     | '/admin/menu'
-    | '/admin/page'
+    | '/admin/pages'
     | '/admin/settings'
+    | '/admin/users'
     | '/admin/products/$id'
     | '/admin/products/list'
   id:
     | '__root__'
     | '/(sign)'
     | '/_public'
-    | '/_user'
     | '/admin'
+    | '/user'
     | '/$'
     | '/(sign)/sign-in'
     | '/(sign)/sign-up'
     | '/_public/403'
     | '/_public/about'
     | '/_public/profile'
-    | '/_user/todos'
-    | '/_user/user'
     | '/admin/$'
+    | '/user/todos'
     | '/_public/'
-    | '/admin/'
+    | '/user/'
+    | '/admin/jobs/$jobId'
+    | '/admin/jobs/create'
+    | '/admin/pages/$pageId'
+    | '/admin/pages/create'
     | '/admin/posts/$postId'
     | '/admin/posts/category'
     | '/admin/posts/create'
     | '/admin/posts/list'
     | '/admin/products/category'
     | '/api/auth/$'
+    | '/admin/_index/'
     | '/admin/category/'
+    | '/admin/jobs/'
     | '/admin/media/'
     | '/admin/menu/'
-    | '/admin/page/'
+    | '/admin/pages/'
     | '/admin/settings/'
+    | '/admin/users/'
     | '/admin/products/$id/'
     | '/admin/products/list/'
   fileRoutesById: FileRoutesById
@@ -349,8 +424,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   signRouteRoute: typeof signRouteRouteWithChildren
   PublicRouteRoute: typeof PublicRouteRouteWithChildren
-  UserRouteRoute: typeof UserRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  UserRouteRoute: typeof UserRouteRouteWithChildren
   SplatRoute: typeof SplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -364,18 +439,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/user': {
+      id: '/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof UserRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_user': {
-      id: '/_user'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof UserRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public': {
@@ -392,12 +467,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof signRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
+    '/user/': {
+      id: '/user/'
       path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
+      fullPath: '/user/'
+      preLoaderRoute: typeof UserIndexRouteImport
+      parentRoute: typeof UserRouteRoute
     }
     '/_public/': {
       id: '/_public/'
@@ -406,26 +481,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRouteRoute
     }
+    '/user/todos': {
+      id: '/user/todos'
+      path: '/todos'
+      fullPath: '/user/todos'
+      preLoaderRoute: typeof UserTodosRouteImport
+      parentRoute: typeof UserRouteRoute
+    }
     '/admin/$': {
       id: '/admin/$'
       path: '/$'
       fullPath: '/admin/$'
       preLoaderRoute: typeof AdminSplatRouteImport
       parentRoute: typeof AdminRouteRoute
-    }
-    '/_user/user': {
-      id: '/_user/user'
-      path: '/user'
-      fullPath: '/user'
-      preLoaderRoute: typeof UserUserRouteImport
-      parentRoute: typeof UserRouteRoute
-    }
-    '/_user/todos': {
-      id: '/_user/todos'
-      path: '/todos'
-      fullPath: '/todos'
-      preLoaderRoute: typeof UserTodosRouteImport
-      parentRoute: typeof UserRouteRoute
     }
     '/_public/profile': {
       id: '/_public/profile'
@@ -462,6 +530,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof signSignInRouteImport
       parentRoute: typeof signRouteRoute
     }
+    '/admin/users/': {
+      id: '/admin/users/'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/settings/': {
       id: '/admin/settings/'
       path: '/settings'
@@ -469,11 +544,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/page/': {
-      id: '/admin/page/'
-      path: '/page'
-      fullPath: '/admin/page'
-      preLoaderRoute: typeof AdminPageIndexRouteImport
+    '/admin/pages/': {
+      id: '/admin/pages/'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/menu/': {
@@ -490,11 +565,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMediaIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/jobs/': {
+      id: '/admin/jobs/'
+      path: '/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AdminJobsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/category/': {
       id: '/admin/category/'
       path: '/category'
       fullPath: '/admin/category'
       preLoaderRoute: typeof AdminCategoryIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/_index/': {
+      id: '/admin/_index/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/api/auth/$': {
@@ -537,6 +626,34 @@ declare module '@tanstack/react-router' {
       path: '/posts/$postId'
       fullPath: '/admin/posts/$postId'
       preLoaderRoute: typeof AdminPostsPostIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/pages/create': {
+      id: '/admin/pages/create'
+      path: '/pages/create'
+      fullPath: '/admin/pages/create'
+      preLoaderRoute: typeof AdminPagesCreateRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/pages/$pageId': {
+      id: '/admin/pages/$pageId'
+      path: '/pages/$pageId'
+      fullPath: '/admin/pages/$pageId'
+      preLoaderRoute: typeof AdminPagesPageIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/jobs/create': {
+      id: '/admin/jobs/create'
+      path: '/jobs/create'
+      fullPath: '/admin/jobs/create'
+      preLoaderRoute: typeof AdminJobsCreateRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/jobs/$jobId': {
+      id: '/admin/jobs/$jobId'
+      path: '/jobs/$jobId'
+      fullPath: '/admin/jobs/$jobId'
+      preLoaderRoute: typeof AdminJobsJobIdRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/products/list/': {
@@ -588,50 +705,48 @@ const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
   PublicRouteRouteChildren,
 )
 
-interface UserRouteRouteChildren {
-  UserTodosRoute: typeof UserTodosRoute
-  UserUserRoute: typeof UserUserRoute
-}
-
-const UserRouteRouteChildren: UserRouteRouteChildren = {
-  UserTodosRoute: UserTodosRoute,
-  UserUserRoute: UserUserRoute,
-}
-
-const UserRouteRouteWithChildren = UserRouteRoute._addFileChildren(
-  UserRouteRouteChildren,
-)
-
 interface AdminRouteRouteChildren {
   AdminSplatRoute: typeof AdminSplatRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+  AdminJobsJobIdRoute: typeof AdminJobsJobIdRoute
+  AdminJobsCreateRoute: typeof AdminJobsCreateRoute
+  AdminPagesPageIdRoute: typeof AdminPagesPageIdRoute
+  AdminPagesCreateRoute: typeof AdminPagesCreateRoute
   AdminPostsPostIdRoute: typeof AdminPostsPostIdRoute
   AdminPostsCategoryRoute: typeof AdminPostsCategoryRoute
   AdminPostsCreateRoute: typeof AdminPostsCreateRoute
   AdminPostsListRoute: typeof AdminPostsListRoute
   AdminProductsCategoryRoute: typeof AdminProductsCategoryRoute
+  AdminIndexIndexRoute: typeof AdminIndexIndexRoute
   AdminCategoryIndexRoute: typeof AdminCategoryIndexRoute
+  AdminJobsIndexRoute: typeof AdminJobsIndexRoute
   AdminMediaIndexRoute: typeof AdminMediaIndexRoute
   AdminMenuIndexRoute: typeof AdminMenuIndexRoute
-  AdminPageIndexRoute: typeof AdminPageIndexRoute
+  AdminPagesIndexRoute: typeof AdminPagesIndexRoute
   AdminSettingsIndexRoute: typeof AdminSettingsIndexRoute
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute
   AdminProductsIdIndexRoute: typeof AdminProductsIdIndexRoute
   AdminProductsListIndexRoute: typeof AdminProductsListIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminSplatRoute: AdminSplatRoute,
-  AdminIndexRoute: AdminIndexRoute,
+  AdminJobsJobIdRoute: AdminJobsJobIdRoute,
+  AdminJobsCreateRoute: AdminJobsCreateRoute,
+  AdminPagesPageIdRoute: AdminPagesPageIdRoute,
+  AdminPagesCreateRoute: AdminPagesCreateRoute,
   AdminPostsPostIdRoute: AdminPostsPostIdRoute,
   AdminPostsCategoryRoute: AdminPostsCategoryRoute,
   AdminPostsCreateRoute: AdminPostsCreateRoute,
   AdminPostsListRoute: AdminPostsListRoute,
   AdminProductsCategoryRoute: AdminProductsCategoryRoute,
+  AdminIndexIndexRoute: AdminIndexIndexRoute,
   AdminCategoryIndexRoute: AdminCategoryIndexRoute,
+  AdminJobsIndexRoute: AdminJobsIndexRoute,
   AdminMediaIndexRoute: AdminMediaIndexRoute,
   AdminMenuIndexRoute: AdminMenuIndexRoute,
-  AdminPageIndexRoute: AdminPageIndexRoute,
+  AdminPagesIndexRoute: AdminPagesIndexRoute,
   AdminSettingsIndexRoute: AdminSettingsIndexRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
   AdminProductsIdIndexRoute: AdminProductsIdIndexRoute,
   AdminProductsListIndexRoute: AdminProductsListIndexRoute,
 }
@@ -640,11 +755,25 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
+interface UserRouteRouteChildren {
+  UserTodosRoute: typeof UserTodosRoute
+  UserIndexRoute: typeof UserIndexRoute
+}
+
+const UserRouteRouteChildren: UserRouteRouteChildren = {
+  UserTodosRoute: UserTodosRoute,
+  UserIndexRoute: UserIndexRoute,
+}
+
+const UserRouteRouteWithChildren = UserRouteRoute._addFileChildren(
+  UserRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   signRouteRoute: signRouteRouteWithChildren,
   PublicRouteRoute: PublicRouteRouteWithChildren,
-  UserRouteRoute: UserRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  UserRouteRoute: UserRouteRouteWithChildren,
   SplatRoute: SplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

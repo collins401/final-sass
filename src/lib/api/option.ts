@@ -3,8 +3,10 @@ import { inArray } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
 import { option } from "@/db/schema";
+import { authMiddleware } from "../auth/auth.middleware";
 
 export const getOptions = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
   .inputValidator(z.array(z.string()).optional())
   .handler(async ({ data: keys }) => {
     try {
@@ -29,6 +31,7 @@ export const getOptions = createServerFn({ method: "GET" })
   });
 
 export const updateOption = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator(
     z.object({
       key: z.string(),
@@ -58,6 +61,7 @@ export const updateOption = createServerFn({ method: "POST" })
   });
 
 export const updateOptions = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((input: { data: string }) => input)
   .handler(async ({ data }) => {
     try {

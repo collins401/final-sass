@@ -33,7 +33,14 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "useImageSize": "warn"
+        "useImageSize": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "options": {
+            "maxAllowedComplexity": 18
+          }
+        }
       },
       "performance": {
         "useTopLevelRegex": "off",

@@ -3,6 +3,7 @@ import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
 import { category, post } from "@/db/schema";
+import { authMiddleware } from "../auth/auth.middleware";
 
 const categorySchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -14,6 +15,7 @@ const categorySchema = z.object({
 });
 
 export const getCategories = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
   .inputValidator(z.number().optional())
   .handler(async ({ data: parentId }) => {
     // 首先获取所有分类
@@ -59,6 +61,7 @@ export const getCategories = createServerFn({ method: "GET" })
   });
 
 export const createCategory = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((data: z.infer<typeof categorySchema>) => categorySchema.parse(data))
   .handler(async ({ data }) => {
     const [newCategory] = await db.insert(category).values(data).returning();
@@ -77,6 +80,7 @@ export const updateCategory = createServerFn({ method: "POST" })
   });
 
 export const deleteCategory = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .inputValidator((id: number) => id)
   .handler(async ({ data: id }) => {
     // Note: This does not recursively delete children unless the DB is set up with CASCADE
