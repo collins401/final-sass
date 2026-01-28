@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect, useLocation } from "@tanstack/react-router";
-import { AlignCenter, StretchHorizontal } from "lucide-react";
+import { AlignStartVertical, AlignVerticalSpaceAround } from "lucide-react";
 import { Suspense, useState } from "react";
 import { AppSidebar } from "@/components/admin/app-sidebar";
 import { navigationGroups } from "@/components/admin/navigation";
@@ -110,9 +110,12 @@ function RouteComponent() {
               <Tooltip>
                 <TooltipTrigger>
                   {contentWidth === "w-full" ? (
-                    <AlignCenter onClick={() => setContentWidth("max-w-[1000px]")} size={20} />
+                    <AlignStartVertical
+                      onClick={() => setContentWidth("max-w-[1000px]")}
+                      size={18}
+                    />
                   ) : (
-                    <StretchHorizontal onClick={() => setContentWidth("w-full")} size={20} />
+                    <AlignVerticalSpaceAround onClick={() => setContentWidth("w-full")} size={18} />
                   )}
                 </TooltipTrigger>
                 <TooltipContent>

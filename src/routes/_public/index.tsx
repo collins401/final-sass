@@ -9,15 +9,33 @@ import {
   Lock,
   Zap,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import CateImage from "@/assets/cate.png";
+import HomeImage from "@/assets/home.png";
+import ListImage from "@/assets/list.png";
+import logo from "@/assets/logo.png";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
 export const Route = createFileRoute("/_public/")({
   component: LandingPage,
 });
 
 function LandingPage() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = [
+    { src: HomeImage, alt: "Dashboard Home" },
+    { src: CateImage, alt: "Category Management" },
+    { src: ListImage, alt: "Content List" },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       {/* Header */}
@@ -30,42 +48,73 @@ function LandingPage() {
 
           <div className="container mx-auto px-4 text-center md:px-6">
             <Badge className="mb-6 rounded-full px-4 py-1.5 text-sm" variant="secondary">
-              🚀 v2.0 is now available
+              🚀 v2.0 现已发布
             </Badge>
-            <h1 className="mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text font-extrabold text-4xl text-transparent tracking-tight md:text-6xl">
-              The Modern Headless CMS <br className="hidden md:block" />
-              for Growth Teams
+            <h1 className="mb-6 bg-linear-to-r from-foreground to-foreground/70 bg-clip-text font-extrabold text-4xl text-transparent tracking-tight md:text-6xl">
+              专为快速增长团队打造的 <br className="hidden md:block" />
+              现代化 Headless CMS
             </h1>
             <p className="mx-auto mb-10 max-w-2xl text-muted-foreground text-xl">
-              Empower your developers and content creators with a flexible, API-first CMS. Built for
-              performance, scalability, and ease of use.
+              为开发者与内容创作者提供灵活、API
+              优先的内容管理体验。专为高性能、可扩展性及易用性而生。
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link to="/sign-up">
                 <Button className="h-12 px-8 text-base" size="lg">
-                  Start for Free <ArrowRight className="ml-2 h-4 w-4" />
+                  免费开始使用 <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/">
                 <Button className="h-12 px-8 text-base" size="lg" variant="outline">
-                  View Demo
+                  查看演示
                 </Button>
               </Link>
             </div>
 
             {/* Dashboard Preview */}
-            <div className="relative mx-auto mt-16 max-w-5xl overflow-hidden rounded-xl border bg-background shadow-2xl">
-              <div className="absolute top-0 flex h-10 w-full items-center gap-2 border-b bg-muted/50 px-4">
+            <div className="group relative mx-auto mt-16 max-w-5xl overflow-hidden rounded-xl border bg-background shadow-2xl">
+              <div className="absolute top-0 z-20 flex h-10 w-full items-center gap-2 border-b bg-muted/50 px-4">
                 <div className="h-3 w-3 rounded-full border border-red-500/50 bg-red-500/20" />
                 <div className="h-3 w-3 rounded-full border border-yellow-500/50 bg-yellow-500/20" />
                 <div className="h-3 w-3 rounded-full border border-green-500/50 bg-green-500/20" />
+                <div className="ml-4 flex gap-1.5">
+                  {images.map((img, idx) => (
+                    <button
+                      aria-label={`Go to slide ${idx + 1}`}
+                      className={`h-1.5 w-1.5 rounded-full transition-all ${
+                        currentImageIndex === idx
+                          ? "w-4 bg-primary"
+                          : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                      }`}
+                      key={img.src}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      type="button"
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="bg-muted/10 p-1 pt-10">
-                {/* Placeholder for dashboard image */}
-                <div className="flex aspect-[16/9] items-center justify-center bg-gradient-to-br from-background to-muted text-muted-foreground">
-                  <div className="text-center">
-                    <LayoutDashboard className="mx-auto mb-4 h-16 w-16 opacity-20" />
-                    <p className="font-medium text-sm opacity-50">Dashboard Preview</p>
+              <div className="relative bg-muted/10 p-1 pt-10">
+                <div className="aspect-video overflow-hidden rounded-lg">
+                  {images.map((img, idx) => (
+                    <div
+                      className={`absolute inset-0 top-10 transition-opacity duration-1000 ease-in-out ${
+                        currentImageIndex === idx ? "z-10 opacity-100" : "z-0 opacity-0"
+                      }`}
+                      key={img.src}
+                    >
+                      <img
+                        alt={img.alt}
+                        className="h-full w-full object-cover object-top"
+                        src={img.src}
+                      />
+                    </div>
+                  ))}
+                  {/* Fallback pattern when images are loading or missing */}
+                  <div className="flex aspect-video items-center justify-center bg-linear-to-br from-background to-muted text-muted-foreground">
+                    <div className="text-center opacity-20">
+                      <LayoutDashboard className="mx-auto mb-4 h-16 w-16" />
+                      <p className="font-medium text-sm">加载中...</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -77,44 +126,42 @@ function LandingPage() {
         <section className="bg-muted/30 py-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mb-16 text-center">
-              <h2 className="mb-4 font-bold text-3xl tracking-tight">
-                Everything you need to build faster
-              </h2>
+              <h2 className="mb-4 font-bold text-3xl tracking-tight">助力快速构建所需的一切</h2>
               <p className="mx-auto max-w-2xl text-muted-foreground">
-                A complete toolkit for managing content across all your digital channels.
+                一套完整的工具集，助您跨全渠道轻松管理内容。
               </p>
             </div>
 
             <div className="grid gap-8 md:grid-cols-3">
               <FeatureCard
-                description="Optimized for speed with edge caching and global CDN distribution."
+                description="通过边缘缓存与全球 CDN 分发，实现极致加载速度。"
                 icon={<Zap className="h-6 w-6 text-yellow-500" />}
-                title="Lightning Fast"
+                title="极速响应"
               />
               <FeatureCard
-                description="Typed SDKs, comprehensive API documentation, and webhooks for everything."
+                description="提供类型完备的 SDK、详尽的 API 文档以及全方位的 Webhook 支持。"
                 icon={<Code2 className="h-6 w-6 text-blue-500" />}
-                title="Developer First"
+                title="开发者至上"
               />
               <FeatureCard
-                description="Role-based access control, SSO, and audit logs built-in."
+                description="内置基于角色的访问控制 (RBAC)、单点登录 (SSO) 及审计日志。"
                 icon={<Lock className="h-6 w-6 text-green-500" />}
-                title="Enterprise Security"
+                title="企业级安全"
               />
               <FeatureCard
-                description="Native support for localization and internationalization."
+                description="原生支持本地化与国际化，轻松实现多语言适配。"
                 icon={<Globe className="h-6 w-6 text-purple-500" />}
-                title="Multi-language"
+                title="多语言支持"
               />
               <FeatureCard
-                description="Drag-and-drop page builder with real-time preview."
+                description="拖拽式页面构建器，支持实时预览，所见即所得。"
                 icon={<LayoutDashboard className="h-6 w-6 text-orange-500" />}
-                title="Visual Editor"
+                title="可视化编辑器"
               />
               <FeatureCard
-                description="Built-in content performance metrics and user engagement tracking."
+                description="内置内容性能指标与用户参与度追踪功能。"
                 icon={<BarChart3 className="h-6 w-6 text-pink-500" />}
-                title="Analytics"
+                title="数据分析"
               />
             </div>
           </div>
@@ -124,7 +171,7 @@ function LandingPage() {
         <section className="border-y py-16">
           <div className="container mx-auto px-4 text-center md:px-6">
             <p className="mb-8 font-semibold text-muted-foreground text-sm uppercase tracking-wider">
-              Trusted by innovative teams
+              深受创新团队信赖
             </p>
             <div className="flex flex-wrap justify-center gap-8 opacity-50 grayscale transition-all duration-500 hover:grayscale-0 md:gap-16">
               {/* Placeholders for logos */}
@@ -151,45 +198,37 @@ function LandingPage() {
         <section className="py-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mb-16 text-center">
-              <h2 className="mb-4 font-bold text-3xl tracking-tight">
-                Simple, transparent pricing
-              </h2>
+              <h2 className="mb-4 font-bold text-3xl tracking-tight">简单透明的价格体系</h2>
               <p className="mx-auto max-w-2xl text-muted-foreground">
-                Start for free, scale as you grow. No credit card required.
+                免费起步，随需扩展。无需信用卡。
               </p>
             </div>
 
             <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
               <PricingCard
-                description="Perfect for personal projects and prototypes."
-                features={["1 Project", "1,000 Records", "2 Users", "Community Support"]}
-                price="$0"
-                title="Starter"
+                description="非常适合个人项目与原型展示。"
+                features={["1 个项目", "1,000 条记录", "2 个用户", "社区支持"]}
+                price="免费"
+                title="入门版"
               />
               <PricingCard
-                description="For growing teams and businesses."
-                features={[
-                  "5 Projects",
-                  "100,000 Records",
-                  "10 Users",
-                  "Priority Support",
-                  "Custom Roles",
-                ]}
+                description="助力成长型团队与企业业务。"
+                features={["5 个项目", "100,000 条记录", "10 个用户", "优先支持", "自定义角色"]}
                 highlighted
                 price="$29"
-                title="Pro"
+                title="专业版"
               />
               <PricingCard
-                description="For large-scale applications and organizations."
+                description="专为大规模应用与组织机构打造。"
                 features={[
-                  "Unlimited Projects",
-                  "Unlimited Records",
+                  "无限项目",
+                  "无限记录",
                   "SSO & SAML",
-                  "Dedicated Success Manager",
-                  "SLA",
+                  "专属客户经理",
+                  "服务等级协议 (SLA)",
                 ]}
-                price="Custom"
-                title="Enterprise"
+                price="定制价格"
+                title="企业版"
               />
             </div>
           </div>
@@ -198,15 +237,13 @@ function LandingPage() {
         {/* CTA Section */}
         <section className="bg-primary py-20 text-primary-foreground">
           <div className="container mx-auto px-4 text-center md:px-6">
-            <h2 className="mb-6 font-bold text-3xl md:text-4xl">
-              Ready to transform your content workflow?
-            </h2>
+            <h2 className="mb-6 font-bold text-3xl md:text-4xl">准备好升级您的内容工作流了吗？</h2>
             <p className="mx-auto mb-10 max-w-2xl text-lg text-primary-foreground/80">
-              Join thousands of developers and marketers building the future of the web.
+              加入成千上万的开发者与市场人员，共同构建 Web 的未来。
             </p>
             <Link to="/sign-up">
               <Button className="h-12 px-8 font-semibold text-base" size="lg" variant="secondary">
-                Get Started for Free
+                免费开始使用
               </Button>
             </Link>
           </div>
@@ -219,99 +256,97 @@ function LandingPage() {
           <div className="mb-8 grid gap-8 md:grid-cols-4">
             <div className="col-span-1 md:col-span-1">
               <div className="mb-4 flex items-center gap-2 font-bold text-xl">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <LayoutDashboard className="h-5 w-5" />
-                </div>
+                <img alt="TanStack CMS Logo" className="h-8 w-8" src={logo} />
                 <span>TanStack CMS</span>
               </div>
               <p className="text-muted-foreground text-sm">
-                The modern headless CMS for building better digital experiences.
+                打造卓越数字体验的现代化 Headless CMS。
               </p>
             </div>
             <div>
-              <h3 className="mb-4 font-semibold">Product</h3>
+              <h3 className="mb-4 font-semibold">产品</h3>
               <ul className="space-y-2 text-muted-foreground text-sm">
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Features
+                    功能特性
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Integrations
+                    集成方案
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Pricing
+                    价格体系
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Changelog
+                    更新日志
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="mb-4 font-semibold">Resources</h3>
+              <h3 className="mb-4 font-semibold">资源</h3>
               <ul className="space-y-2 text-muted-foreground text-sm">
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Documentation
+                    文档中心
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    API Reference
+                    API 参考
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Community
+                    社区交流
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Blog
+                    博客
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="mb-4 font-semibold">Company</h3>
+              <h3 className="mb-4 font-semibold">公司</h3>
               <ul className="space-y-2 text-muted-foreground text-sm">
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    About
+                    关于我们
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Careers
+                    人才招聘
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Legal
+                    法律条款
                   </Link>
                 </li>
                 <li>
                   <Link className="hover:text-foreground" to="/">
-                    Contact
+                    联系我们
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 border-t pt-8 text-muted-foreground text-sm md:flex-row">
-            <p>© 2024 TanStack CMS. All rights reserved.</p>
+            <p>© 2024 TanStack CMS. 保留所有权利。</p>
             <div className="flex gap-6">
               <Link className="hover:text-foreground" to="/">
-                Privacy Policy
+                隐私政策
               </Link>
               <Link className="hover:text-foreground" to="/">
-                Terms of Service
+                服务条款
               </Link>
             </div>
           </div>
@@ -366,7 +401,9 @@ function PricingCard({
         <CardTitle className="text-2xl">{title}</CardTitle>
         <div className="mt-4 mb-2">
           <span className="font-bold text-4xl">{price}</span>
-          {price !== "Custom" && <span className="text-muted-foreground">/month</span>}
+          {price !== "定制价格" && price !== "免费" && (
+            <span className="text-muted-foreground">/月</span>
+          )}
         </div>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
@@ -382,7 +419,7 @@ function PricingCard({
       </CardContent>
       <div className="mt-auto p-6 pt-0">
         <Button className="w-full" variant={highlighted ? "default" : "outline"}>
-          {price === "Custom" ? "Contact Sales" : "Get Started"}
+          {price === "定制价格" ? "联系销售" : "立即开始"}
         </Button>
       </div>
     </Card>

@@ -3,7 +3,6 @@ import { Github, Loader2 } from "lucide-react";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,9 +10,9 @@ import { authClient } from "@/lib/auth/auth.client";
 
 export const Route = createFileRoute("/(sign)/sign-in")({
   component: RouteComponent,
-  validateSearch: z.object({
-    redirect: z.string().optional(),
-  }),
+  // validateSearch: z.object({
+  //   redirect: z.string().optional(),
+  // }),
 });
 
 interface SignInFormData {
@@ -21,15 +20,15 @@ interface SignInFormData {
   password: string;
 }
 const Icons = {
-	google: (props: React.ComponentProps<"svg">) => (
-		<svg role="img" viewBox="0 0 24 24" {...props}>
-			<path
-				d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-				fill="currentColor"
-			/>
-		</svg>
-	),
-	gitHub: Github,
+  google: (props: React.ComponentProps<"svg">) => (
+    <svg role="img" viewBox="0 0 24 24" {...props}>
+      <path
+        d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  gitHub: Github,
 };
 function RouteComponent() {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,19 +66,19 @@ function RouteComponent() {
     }
   };
 
-	const handleSocialSignIn = async (provider: "github" | "google") => {
-		setIsLoading(true);
-		try {
-			await authClient.signIn.social({
-				provider: provider,
-				callbackURL: "/",
-			});
-		} catch (error) {
-			console.error(`${provider} 登录错误:`, error);
-			toast.error(`${provider} 登录失败，请重试`);
-			setIsLoading(false);
-		}
-	};
+  const handleSocialSignIn = async (provider: "github" | "google") => {
+    setIsLoading(true);
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/",
+      });
+    } catch (error) {
+      console.error(`${provider} 登录错误:`, error);
+      toast.error(`${provider} 登录失败，请重试`);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex h-full items-center justify-center p-4 lg:p-8">
@@ -145,37 +144,35 @@ function RouteComponent() {
           </div>
         </form>
 
-					<div className="relative">
-						<div className="absolute inset-0 flex items-center">
-							<span className="w-full border-t" />
-						</div>
-						<div className="relative flex justify-center text-xs uppercase">
-							<span className="bg-background px-2 text-muted-foreground">
-								或者
-							</span>
-						</div>
-					</div>
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">或者</span>
+          </div>
+        </div>
 
-					<div className="grid grid-cols-2 gap-6">
-						<Button
-							variant="outline"
-							type="button"
-							disabled={isLoading}
-							onClick={() => handleSocialSignIn("github")}
-						>
-							<Icons.gitHub className="mr-2 h-4 w-4" />
-							Github
-						</Button>
-						<Button
-							variant="outline"
-							type="button"
-							disabled={isLoading}
-							onClick={() => handleSocialSignIn("google")}
-						>
-							<Icons.google className="mr-2 h-4 w-4" />
-							Google
-						</Button>
-					</div>
+        <div className="grid grid-cols-2 gap-6">
+          <Button
+            disabled={isLoading}
+            onClick={() => handleSocialSignIn("github")}
+            type="button"
+            variant="outline"
+          >
+            <Icons.gitHub className="mr-2 h-4 w-4" />
+            Github
+          </Button>
+          <Button
+            disabled={isLoading}
+            onClick={() => handleSocialSignIn("google")}
+            type="button"
+            variant="outline"
+          >
+            <Icons.google className="mr-2 h-4 w-4" />
+            Google
+          </Button>
+        </div>
         <p className="px-8 text-center text-muted-foreground text-sm">
           还没有账户？{" "}
           <Link

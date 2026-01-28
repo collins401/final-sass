@@ -32,6 +32,7 @@ import { Route as AdminJobsIndexRouteImport } from './routes/admin/jobs/index'
 import { Route as AdminCategoryIndexRouteImport } from './routes/admin/category/index'
 import { Route as AdminIndexIndexRouteImport } from './routes/admin/_index/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
+import { Route as AdminProductsCreateRouteImport } from './routes/admin/products/create'
 import { Route as AdminProductsCategoryRouteImport } from './routes/admin/products/category'
 import { Route as AdminPostsListRouteImport } from './routes/admin/posts/list'
 import { Route as AdminPostsCreateRouteImport } from './routes/admin/posts/create'
@@ -157,6 +158,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminProductsCreateRoute = AdminProductsCreateRouteImport.update({
+  id: '/products/create',
+  path: '/products/create',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminProductsCategoryRoute = AdminProductsCategoryRouteImport.update({
   id: '/products/category',
   path: '/products/category',
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
   '/admin/products/category': typeof AdminProductsCategoryRoute
+  '/admin/products/create': typeof AdminProductsCreateRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/admin/': typeof AdminIndexIndexRoute
   '/admin/category': typeof AdminCategoryIndexRoute
@@ -267,6 +274,7 @@ export interface FileRoutesByTo {
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
   '/admin/products/category': typeof AdminProductsCategoryRoute
+  '/admin/products/create': typeof AdminProductsCreateRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/admin': typeof AdminIndexIndexRoute
   '/admin/category': typeof AdminCategoryIndexRoute
@@ -304,6 +312,7 @@ export interface FileRoutesById {
   '/admin/posts/create': typeof AdminPostsCreateRoute
   '/admin/posts/list': typeof AdminPostsListRoute
   '/admin/products/category': typeof AdminProductsCategoryRoute
+  '/admin/products/create': typeof AdminProductsCreateRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/admin/_index/': typeof AdminIndexIndexRoute
   '/admin/category/': typeof AdminCategoryIndexRoute
@@ -340,6 +349,7 @@ export interface FileRouteTypes {
     | '/admin/posts/create'
     | '/admin/posts/list'
     | '/admin/products/category'
+    | '/admin/products/create'
     | '/api/auth/$'
     | '/admin/'
     | '/admin/category'
@@ -372,6 +382,7 @@ export interface FileRouteTypes {
     | '/admin/posts/create'
     | '/admin/posts/list'
     | '/admin/products/category'
+    | '/admin/products/create'
     | '/api/auth/$'
     | '/admin'
     | '/admin/category'
@@ -408,6 +419,7 @@ export interface FileRouteTypes {
     | '/admin/posts/create'
     | '/admin/posts/list'
     | '/admin/products/category'
+    | '/admin/products/create'
     | '/api/auth/$'
     | '/admin/_index/'
     | '/admin/category/'
@@ -593,6 +605,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/products/create': {
+      id: '/admin/products/create'
+      path: '/products/create'
+      fullPath: '/admin/products/create'
+      preLoaderRoute: typeof AdminProductsCreateRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/products/category': {
       id: '/admin/products/category'
       path: '/products/category'
@@ -716,6 +735,7 @@ interface AdminRouteRouteChildren {
   AdminPostsCreateRoute: typeof AdminPostsCreateRoute
   AdminPostsListRoute: typeof AdminPostsListRoute
   AdminProductsCategoryRoute: typeof AdminProductsCategoryRoute
+  AdminProductsCreateRoute: typeof AdminProductsCreateRoute
   AdminIndexIndexRoute: typeof AdminIndexIndexRoute
   AdminCategoryIndexRoute: typeof AdminCategoryIndexRoute
   AdminJobsIndexRoute: typeof AdminJobsIndexRoute
@@ -739,6 +759,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminPostsCreateRoute: AdminPostsCreateRoute,
   AdminPostsListRoute: AdminPostsListRoute,
   AdminProductsCategoryRoute: AdminProductsCategoryRoute,
+  AdminProductsCreateRoute: AdminProductsCreateRoute,
   AdminIndexIndexRoute: AdminIndexIndexRoute,
   AdminCategoryIndexRoute: AdminCategoryIndexRoute,
   AdminJobsIndexRoute: AdminJobsIndexRoute,

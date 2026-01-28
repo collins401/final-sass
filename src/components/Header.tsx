@@ -1,8 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { LayoutDashboard, LogOut, Menu, UserRound } from "lucide-react";
+import { LogOut, Menu, UserRound } from "lucide-react";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
+import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth/auth.client";
 import { authQueryOptions } from "@/lib/auth/auth.queries";
@@ -26,8 +27,7 @@ export function UserAction() {
       toast.success("已成功退出登录");
       // 刷新页面以更新 session
       window.location.reload();
-    } catch (error) {
-      console.error("退出登录失败:", error);
+    } catch {
       toast.error("退出登录失败");
     }
   };
@@ -78,28 +78,26 @@ export function UserAction() {
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-2 font-bold text-xl">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <LayoutDashboard className="h-5 w-5" />
-          </div>
+          <img alt="TanStack CMS Logo" className="h-8 w-8" src={logo} />
           <span>TanStack CMS</span>
         </div>
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-6 font-medium text-sm md:flex">
           <Link className="transition-colors hover:text-primary" to="/">
-            Features
+            功能特性
           </Link>
           <Link className="transition-colors hover:text-primary" to="/">
-            Solutions
+            解决方案
           </Link>
           <Link className="transition-colors hover:text-primary" to="/">
-            Pricing
+            价格
           </Link>
           <Link className="transition-colors hover:text-primary" to="/">
-            Docs
+            文档
           </Link>
         </nav>
 
@@ -134,30 +132,30 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
               to="/"
             >
-              Features
+              功能特性
             </Link>
             <Link
               className="font-medium text-sm hover:text-primary"
               onClick={() => setIsMenuOpen(false)}
               to="/"
             >
-              Solutions
+              解决方案
             </Link>
             <Link
               className="font-medium text-sm hover:text-primary"
               onClick={() => setIsMenuOpen(false)}
               to="/"
             >
-              Pricing
+              价格
             </Link>
             <div className="mt-2 flex flex-col gap-2">
               <Link onClick={() => setIsMenuOpen(false)} to="/sign-in">
                 <Button className="w-full" variant="outline">
-                  Log in
+                  登录
                 </Button>
               </Link>
               <Link onClick={() => setIsMenuOpen(false)} to="/sign-up">
-                <Button className="w-full">Get Started</Button>
+                <Button className="w-full">立即开始</Button>
               </Link>
             </div>
           </nav>

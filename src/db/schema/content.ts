@@ -64,6 +64,8 @@ export const post = sqliteTable(
       onDelete: "set null",
     }),
     coverImage: text("cover_image"),
+    thumbnail: text("thumbnail"),
+    metadata: text("metadata", { mode: "json" }),
     publishedAt: integer("published_at", { mode: "timestamp" }),
     createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`).notNull(),
     updatedAt: integer("updated_at", { mode: "timestamp" })

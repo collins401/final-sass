@@ -6,7 +6,6 @@ import { option } from "@/db/schema";
 import { authMiddleware } from "../auth/auth.middleware";
 
 export const getOptions = createServerFn({ method: "GET" })
-  .middleware([authMiddleware])
   .inputValidator(z.array(z.string()).optional())
   .handler(async ({ data: keys }) => {
     try {

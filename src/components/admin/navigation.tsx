@@ -52,7 +52,7 @@ export const navigationGroups: NavGroupData[] = [
         items: [
           {
             title: "新建",
-            url: "/admin/posts/edit",
+            url: "/admin/posts/create",
           },
           {
             title: "文章列表",
